@@ -5,11 +5,12 @@ import random
 class game_engine(object):
 
     # This is the constructer method, this is what will be passed to the play() for the game to run
-    def __init__(self,demon,item,father):
+    def __init__(self,demon,item,father,lore):
         self.demon = demon
         self.item = item
         self.father = father
-        self.paths = ["Path 1", "Path 2", "Path 3"]    
+        self.paths = ["Path 1", "Path 2", "Path 3"]
+        self.lore = lore    
     
     # This is the actual game where everything will run
     def play(self,):
@@ -22,11 +23,17 @@ class game_engine(object):
 
             # The path the demon will be on - randomizes every round
             demon_path = random.choice(self.paths)
-
+            
 
             # Randomly assign the item path
             item_paths = [path for path in self.paths if path != demon_path]
             item_path = random.choice(item_paths)
+    
+            # This is where the lore is
+            lore_paths = [path for path in self.paths if (path != demon_path and path not in item_path)]
+            lore_path = random.choice(lore_paths)
+            
+            
 
             #Ask the user if they want to use their flashlight to see where the demon is.
             need_help = input(str("Would you like to use your flashlight? (y/n) -> "))
@@ -75,8 +82,8 @@ class game_engine(object):
                 self.item.collect_item()
             
             # If the user picks this path then nothing happens but just run the loop again.
-            else:
-                print("You have survived.\n")
+            elif chosen_path == lore_path:
+                self.lore.lore_play()
             
         # Once the user has survived 7 rounds then they win the game and get their daugther back.
         if loop_count >= 7:
@@ -120,9 +127,18 @@ class item(object):
 # This is the lore object, and will be sent to the game engine also.
 class lore(object):
 
+    lorelist = ['The father','Lost his child','Got very angry','Turned to a demon']
     # If the user picks this path then they will find out who the demon was, and how he became that way.
     def lore_story(self):
-        pass
+        lore_pieces = random.choice(self.lorelist)
+        print(lore_pieces)
+        self.lorelist.remove(lore_pieces)
+
+    def lore_play(self):
+        if self.lorelist:
+            self.lore_story()
+        else:
+            print("You have found all the pieces to the lore. Now put them in order to understand the story.")
 
 # instanciating all the classes to objects
 a = evil_demon()
@@ -131,5 +147,5 @@ c = father()
 d = lore()
 
 # calling the actual game with the given parameters
-start = game_engine(a,b,c)
+start = game_engine(a,b,c,d)
 start.play()
