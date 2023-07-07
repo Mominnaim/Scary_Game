@@ -1,4 +1,3 @@
-import time
 import random
 
 # This is where the actual game will run from
@@ -13,7 +12,7 @@ class game_engine(object):
         self.lore = lore    
     
     # This is the actual game where everything will run
-    def play(self,):
+    def play(self):
 
         # how many rounds you have survived,
         loop_count = 0
@@ -47,7 +46,7 @@ class game_engine(object):
             # If the user picks 'y' and they have a battery, it will call the father class and execute the use_item function. -> brings in users_bagpack from the item class and demon_path
             # This is because the 'father' needs to check if he has batteries or not, and if he does, the demon path will be known. This will be executed in the father class.
             if need_help.lower() == "y":
-                if "Battery" in item.users_bagpack:
+                if "Battery" in self.item.users_bagpack:
                     self.father.use_item(self.item.users_bagpack,demon_path)
                 else:
                     print("You don't have any batteries \n")
@@ -112,8 +111,9 @@ class evil_demon(object):
 class item(object):
 
     # These are the variables that are in this class. and will only be in this class.
-    items_list = ["Battery"]
-    users_bagpack = ["Battery"]
+    def __init__(self,items_list,users_bagpack):
+        self.items_list = ["Battery"]
+        self.users_bagpack = ["Battery"]
 
     # If the user picks this path, the user collects the item and will be sent to his bagpack
     def collect_item(self):
@@ -127,11 +127,18 @@ class item(object):
 # This is the lore object, and will be sent to the game engine also.
 class lore(object):
 
-    lorelist = ['The father','Lost his child','Got very angry','Turned to a demon']
+    lore_collection = []
+
+    def __init__(self):
+        self.lorelist = ['The father was in the forrest with his child.  ','He turned around to see where his child went,'
+        'as soon as he turned aorund, he saw a demon like figure take his child and disappear', 'Once he found his child, the demon was with her and asked him this question.',
+        'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies right here in front of you."']
     # If the user picks this path then they will find out who the demon was, and how he became that way.
     def lore_story(self):
         lore_pieces = random.choice(self.lorelist)
-        print(lore_pieces)
+        self.lore_collection.append(lore_pieces)
+        print(lore_pieces, '\n')
+        print('Your current lore collection: ' , self.lore_collection)
         self.lorelist.remove(lore_pieces)
 
     def lore_play(self):
@@ -142,10 +149,15 @@ class lore(object):
 
 # instanciating all the classes to objects
 a = evil_demon()
-b = item()
+b = item(["Battery"],["Battery"])
 c = father()
 d = lore()
 
 # calling the actual game with the given parameters
 start = game_engine(a,b,c,d)
 start.play()
+
+
+# Need to create test for the game like chapter 47 ---> First priority
+# Also need to first finish the whole game ----> second prriority 
+# Bonus ---> see if you can test the game engine, automate user_input > is there a way? 
