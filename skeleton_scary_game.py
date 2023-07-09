@@ -1,7 +1,7 @@
 import random
 
 # This is where the actual game will run from
-class game_engine(object):
+class Game_engine(object):
 
     # This is the constructer method, this is what will be passed to the play() for the game to run
     def __init__(self,demon,item,father,lore):
@@ -87,10 +87,14 @@ class game_engine(object):
         # Once the user has survived 7 rounds then they win the game and get their daugther back.
         if loop_count >= 7:
             print("The demon said thank you for playing and returned your child")
-            exit(0)
 
-# The father class, and the only thing this class can do is use and item.
-class father(object):
+class Father(object):
+
+    """
+    This class is the father class and essentially the user can reveal the position of the demon
+    IF they have batteries.
+
+    """
     
     # This is where the item is acutally used and then removed after the usage.
     def use_item(self,bagpack,demon):
@@ -99,16 +103,25 @@ class father(object):
 
 
 # This is the evil demon object, and it will be sent to the game_engine 
-class evil_demon(object):
+class Evil_demon(object):
+
+    """
+    This class is the demon class and really you just die if you encounter the demon.
+    """
     
     #If  the user picks this path, the user dies 
     def death(self):
         print("The demon ate you for dinner and let your child go back home parentless.")
-        exit(1)
+        #exit(1)
     
 
 # This is the item object, and will be sent to the game engine as well.
-class item(object):
+class Item(object):
+    
+    """
+    This is the item class where the item list and the user bagpack is intialized and if
+    you walk the item path then you collect that item. Once the item has been used then it gets removed.
+    """
 
     # These are the variables that are in this class. and will only be in this class.
     def __init__(self,items_list,users_bagpack):
@@ -125,7 +138,13 @@ class item(object):
         return self.users_bagpack
 
 # This is the lore object, and will be sent to the game engine also.
-class lore(object):
+class Lore(object):
+
+    """
+    This is the lore class and essentially if you walk the lore path then you find a piece of info of who 
+    the demon was and how he became that way.
+
+    """
 
     lore_collection = []
 
@@ -135,11 +154,11 @@ class lore(object):
         'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies right here in front of you."']
     # If the user picks this path then they will find out who the demon was, and how he became that way.
     def lore_story(self):
-        lore_pieces = random.choice(self.lorelist)
-        self.lore_collection.append(lore_pieces)
-        print(lore_pieces, '\n')
+        lore_piece = random.choice(self.lorelist)
+        self.lore_collection.append(lore_piece)
+        print(lore_piece, '\n')
         print('Your current lore collection: ' , self.lore_collection)
-        self.lorelist.remove(lore_pieces)
+        self.lorelist.remove(lore_piece)
 
     def lore_play(self):
         if self.lorelist:
@@ -148,13 +167,13 @@ class lore(object):
             print("You have found all the pieces to the lore. Now put them in order to understand the story.")
 
 # instanciating all the classes to objects
-a = evil_demon()
-b = item(["Battery"],["Battery"])
-c = father()
-d = lore()
+Anunnaki = Evil_demon()
+stuff = Item(["Battery"],["Battery"])
+Ali = Father()
+The_story = Lore()
 
 # calling the actual game with the given parameters
-start = game_engine(a,b,c,d)
+start = Game_engine(Anunnaki,stuff,Ali,The_story)
 start.play()
 
 
