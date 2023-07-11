@@ -50,9 +50,8 @@ class Game_engine(object):
                     self.father.use_item(self.item.users_bagpack,demon_path)
                 else:
                     print("You don't have any batteries \n")
-                    pass
             elif need_help.lower() == "n":
-                pass
+                print("You have these items on your bagpack:", self.item.users_bagpack)
 
             # Display the available paths
             for i, path in enumerate(self.paths):
@@ -112,7 +111,7 @@ class Evil_demon(object):
     #If  the user picks this path, the user dies 
     def death(self):
         print("The demon ate you for dinner and let your child go back home parentless.")
-        #exit(1)
+        exit(1)
     
 
 # This is the item object, and will be sent to the game engine as well.
@@ -177,6 +176,5 @@ start = Game_engine(Anunnaki,stuff,Ali,The_story)
 start.play()
 
 
-# Need to create test for the game like chapter 47 ---> First priority
-# Also need to first finish the whole game ----> second prriority 
-# Bonus ---> see if you can test the game engine, automate user_input > is there a way? 
+# Need to create test for the game -- use if statements. ------> 
+# What are the new things you are going to add to this game.------> 

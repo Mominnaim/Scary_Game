@@ -15,7 +15,7 @@ lore_sto = ['The father was in the forrest with his child.  ','He turned around 
     # If the user picks this path then they will find out who the demon was, and how he became that way.
 
 Dad = Father()
-things = Item()
+items = Item()
 story = Lore()
 
 Dad.use_item(users_bagpack,demon)
@@ -25,7 +25,7 @@ if users_bagpack:
 else:
     print("It works!!!")
 
-things.collect_item(item_list,users_bagpack_2)
+items.collect_item(item_list,users_bagpack_2)
 if users_bagpack_2 == ["Battery","Battery"]:
     print("WORKS")
 else:
@@ -33,7 +33,7 @@ else:
 
 Lore.lore_story(lore_sto)
 
-if len(lore_sto) == 4:
+if len(lore_sto) == 3:
     print("WORKS")
 else:
     print(len(lore_sto))
