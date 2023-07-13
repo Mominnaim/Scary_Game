@@ -18,25 +18,10 @@ Dad = Father()
 items = Item()
 story = Lore()
 
-Dad.use_item(users_bagpack,demon)
+def lore_list_size():
+    print(len(story.lorelist()))
 
-if users_bagpack:
-    print(users_bagpack)
-else:
-    print("It works!!!")
-
-items.collect_item(item_list,users_bagpack_2)
-if users_bagpack_2 == ["Battery","Battery"]:
-    print("WORKS")
-else:
-    print(users_bagpack_2)
-
-Lore.lore_story(lore_sto)
-
-if len(lore_sto) == 3:
-    print("WORKS")
-else:
-    print(len(lore_sto))
+lore_list_size()
 
 
 

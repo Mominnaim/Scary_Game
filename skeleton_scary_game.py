@@ -11,14 +11,18 @@ class Game_engine(object):
         self.paths = ["Path 1", "Path 2", "Path 3"]
         self.lore = lore    
     
+
     # This is the actual game where everything will run
     def play(self):
+
 
         # how many rounds you have survived,
         loop_count = 0
 
+
         # Loop until 7 rounds have been reach and you win, the game is on a finite condition.
         while True:
+
 
             # The path the demon will be on - randomizes every round
             demon_path = random.choice(self.paths)
@@ -28,6 +32,7 @@ class Game_engine(object):
             item_paths = [path for path in self.paths if path != demon_path]
             item_path = random.choice(item_paths)
     
+
             # This is where the lore is
             lore_paths = [path for path in self.paths if (path != demon_path and path not in item_path)]
             lore_path = random.choice(lore_paths)
@@ -47,13 +52,46 @@ class Game_engine(object):
                 continue
 
 
-            # If the user picks 'y' and they have a battery, it will call the father class and execute the use_item function. -> brings in users_bagpack from the item class and demon_path
-            # This is because the 'father' needs to check if he has batteries or not, and if he does, the demon path will be known. This will be executed in the father class.
+            # The user can craft an item if they have all the required parts for it. If they click y the they will be prompted to pick what item they want to craft.
+            # If the user picks n then it will just displaty their current bagpack.
             if need_help.lower() == "y":
-                print("Pick an item you would like to craft.")
+                print("\nPick an item you would like to craft.")
                 pick_an_item = input(str("1.----->   Torch \n2.----->   Pistol \n==> "))
+                print()
+                if pick_an_item == "1":
+                    self.father.create_torch(self.item.users_bagpack)
+                elif pick_an_item == "2":
+                    self.father.create_gun(self.item.users_bagpack)
+                else:
+                    print("You did not pick one of the options given!")
             elif need_help.lower() == "n":
                 print("You have these items on your bagpack:", self.item.users_bagpack)
+                print()
+
+
+            # The user will be asked if they would like to use an item, if they pick y then they will choose what item,
+            # If they pick n then they will n, it will continue on with the game.
+            try:
+                use_an_item = input(str("\nWould you like to use an Item (y/n) => "))
+                if use_an_item.lower() != 'y' and use_an_item.lower() != 'n':
+                    raise ValueError("PLEASE ENTER y or n!")
+            except ValueError as d:
+                print(str(d))
+                continue
+
+            if use_an_item == 'y':
+                print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Torch\n3. ---> Gun")
+                item_usage = input(str("==> "))
+                if item_usage == "1":
+                    self.father.use_item(self.item.users_bagpack,demon_path)
+                elif item_usage == "2":
+                    self.father.use_torch(self.item.users_bagpack,item_path)
+                elif item_usage == "3":
+                    pass
+                else:
+                    print("That is not an option.\n")
+
+
 
             # Display the available paths
             for i, path in enumerate(self.paths):
@@ -106,34 +144,53 @@ class Father(object):
     
     # This is where the item is acutally used and then removed after the usage.
     def use_item(self,bagpack,demon):
-        print(f"The demon is on {demon}. \n")
-        bagpack.remove("Battery")
-
-    def create_torch(self,items):
-        if "Wooden stick" in items and "Matches" in items:
+        if "Battery" in bagpack:
+            print(f"The demon is on {demon}. \n")
+            bagpack.remove("Battery")
+        else:
+            print("You do not have any batteries left to use.\n")
+    
+    # This is where the torch is created
+    def create_torch(self,bagpack):
+        if "Wooden stick" in bagpack and "Matches" in bagpack:
             print("Torch created!")
             # Remove the torch stick and matches from the inventory
-            items.remove("torch stick")
-            items.remove("matches")
-            items.append("Torch")
+            bagpack.remove("torch stick")
+            bagpack.remove("matches")
+            bagpack.append("Torch")
             # Additional code to handle creating the torch
         else:
             print("You don't have all the required items to create a torch.")
 
-    def create_gun(self,items):
-        if "Pistol" in items and "Bullets" in items and "Magazine" in items:
+    # This is where the gun is created, and once created the parts of the gun get removed from the list.
+    def create_gun(self,bagpack,item):
+        if "Pistol" in bagpack and "Bullets" in bagpack and "Magazine" in bagpack:
             print("You have a gun. Ready to kill the demon, and get your daughter back?")
-            items.remove("Bullets")
-            items.remove("Magazine")
-            items.remove("Pistol")
-            items.append("Loaded Pistol")
+            print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
+            # This are the items being removed from the bagpack
+            bagpack.remove("Gunpowder")
+            bagpack.remove("Magazine")
+            bagpack.remove("Pistol")
+
+            #The user gains a item since he had all the required parts 
+            bagpack.append("Deagle")
+
+            #Now the gun has been made, he doesnt need to make it again.
+            item.remove("Gunpowder")
+            item.remove("Magazine")
+            item.remove("Pistol")
         else:
             print("You don't have all the parts yet")
 
-    def use_torch(self,bagpack,demon):
-        print(f"The demon is on {demon}. \n")
-        bagpack.remove("Torch")
+    # This is where you can use the torch 
+    def use_torch(self,bagpack,item_path):
+        if "Torch" in bagpack
+            print(f"The item is on {item_path}. \n")
+            bagpack.remove("Torch")
+        else:
+            print("You do not have a torch\n")
 
+    # This is where you can use the pistol.
     def use_pistol(self,bagpack):
         pass
 
@@ -159,8 +216,8 @@ class Item(object):
     """
 
     # These are the variables that are in this class. and will only be in this class.
-    def __init__(self):
-        self.items_list = ["Battery","Matches","Wooden stick","Bullets","Magazine","Pistol"]
+    def __init__(self,items_list,users_bagpack):
+        self.items_list = []
         self.users_bagpack = []
 
     # If the user picks this path, the user collects the item and will be sent to his bagpack
@@ -183,10 +240,8 @@ class Lore(object):
 
     lore_collection = []
 
-    def __init__(self):
-        self.lorelist = ['The father was in the forrest with his child.  ','He turned around to see where his child went,'
-        'as soon as he turned aorund, he saw a demon like figure take his child and disappear', 'Once he found his child, the demon was with her and asked him this question.',
-        'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies right here in front of you."']
+    def __init__(self,lorelist):
+        self.lorelist = []
     # If the user picks this path then they will find out who the demon was, and how he became that way.
     def lore_story(self):
         lore_piece = random.choice(self.lorelist)
@@ -202,15 +257,34 @@ class Lore(object):
             print("You have found all the pieces to the lore. Now put them in order to understand the story.")
 
 # instanciating all the classes to objects
-Anunnaki = Evil_demon()
-stuff = Item()
-Ali = Father()
-The_story = Lore()
 
-# calling the actual game with the given parameters
-start = Game_engine(Anunnaki,stuff,Ali,The_story)
-start.play()
+def main():
+    # instanciating all the classes to objects
+    Anunnaki = Evil_demon()
+    Ali = Father()
+
+    This_the_bagpack = ["Battery"]
+    this_are_the_items = ["Battery","Matches","Wooden stick","Bullets","Magazine","Pistol","Gunpowder"]
+    stuff = Item(this_are_the_items,This_the_bagpack)
+
+    this_is_the_lore = ['The father was in the forrest with his child.  ','He turned around to see where his child went,'
+        'as soon as he turned aorund, he saw a demon like figure take his child and disappear', 'Once he found his child, the demon was with her and asked him this question.',
+        'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies right here in front of you."']
+    The_story = Lore(this_is_the_lore)
+
+    # calling the actual game with the given parameters
+    start = Game_engine(Anunnaki,stuff,Ali,The_story)
+    start.play()
+
+if __name__ == "__main__":
+    main()
 
 
-# Need to create test for the game -- use if statements. ------> 
-# What are the new things you are going to add to this game.------> 
+
+# Need to create test for the game -- use if statements. ------> [CHECK]
+# What are the new things you are going to add to this game.------> [CHECK]
+
+# When use_pistol you have to choose a path and if you choose the demon path, you kill him. if not you wasted bullets
+# Once the pistol has been created you can take those pieces out the list.
+# ----> If the user uses the pistol, how will the loop work
+# The killing demon part of the game will be in the demon class -> Youcan either get eatin by him or kill him.
