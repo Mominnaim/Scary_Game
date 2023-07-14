@@ -5,7 +5,8 @@ from skeleton_scary_game import Item
 from skeleton_scary_game import Lore
 
 
-users_bagpack = ['Battery']
+users_bagpack_1 = ["Pistol","Gunpowder","Magazine"]
+item_main = ['Pistol','Magazine','Gunpowder']
 users_bagpack_2 = ['Battery']
 item_list = ["Battery"]
 demon = 1
@@ -15,13 +16,17 @@ lore_sto = ['The father was in the forrest with his child.  ','He turned around 
     # If the user picks this path then they will find out who the demon was, and how he became that way.
 
 Dad = Father()
-items = Item()
-story = Lore()
+story = Lore(lore_sto)
 
-def lore_list_size():
-    print(len(story.lorelist()))
+Dad.create_gun(users_bagpack_1,item_main)
 
-lore_list_size()
+if "Deagle" in users_bagpack_1:
+    print("I can shoot that demon")
+    print(item_main)
+    print(users_bagpack_1)
+else:
+    print(users_bagpack_1)
+
 
 
 

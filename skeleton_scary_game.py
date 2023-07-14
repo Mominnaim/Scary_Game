@@ -164,7 +164,7 @@ class Father(object):
 
     # This is where the gun is created, and once created the parts of the gun get removed from the list.
     def create_gun(self,bagpack,item):
-        if "Pistol" in bagpack and "Bullets" in bagpack and "Magazine" in bagpack:
+        if "Pistol" in bagpack and "Gunpowder" in bagpack and "Magazine" in bagpack:
             print("You have a gun. Ready to kill the demon, and get your daughter back?")
             print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
             # This are the items being removed from the bagpack
@@ -184,7 +184,7 @@ class Father(object):
 
     # This is where you can use the torch 
     def use_torch(self,bagpack,item_path):
-        if "Torch" in bagpack
+        if "Torch" in bagpack:
             print(f"The item is on {item_path}. \n")
             bagpack.remove("Torch")
         else:
@@ -217,8 +217,8 @@ class Item(object):
 
     # These are the variables that are in this class. and will only be in this class.
     def __init__(self,items_list,users_bagpack):
-        self.items_list = []
-        self.users_bagpack = []
+        self.items_list = items_list
+        self.users_bagpack = users_bagpack
 
     # If the user picks this path, the user collects the item and will be sent to his bagpack
     def collect_item(self):
@@ -241,7 +241,7 @@ class Lore(object):
     lore_collection = []
 
     def __init__(self,lorelist):
-        self.lorelist = []
+        self.lorelist = lorelist
     # If the user picks this path then they will find out who the demon was, and how he became that way.
     def lore_story(self):
         lore_piece = random.choice(self.lorelist)
@@ -255,6 +255,9 @@ class Lore(object):
             self.lore_story()
         else:
             print("You have found all the pieces to the lore. Now put them in order to understand the story.")
+
+    def lore_size(self):
+        return len(self.lorelist)
 
 # instanciating all the classes to objects
 
