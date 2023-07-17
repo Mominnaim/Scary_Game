@@ -1,5 +1,6 @@
-GOAL: the goal of the game is to kill the monster and get your daughter back.
-* It is a game of pick on the three paths
+***GOAL: the goal of the game is to kill the monster and get your daughter back.**
+
+This game will require you to pick one of the three paths as listed below:
 
                                           -> Demon path (LOSE)
 
@@ -8,10 +9,13 @@ GOAL: the goal of the game is to kill the monster and get your daughter back.
                                           -> Lore_path (Find the backstory of the monster)
     
 
-    REMEMBER: -> You already have a flashlight and all you need is a "Battery" to use:
-        Using this item will reveal where the mosnter is. 
+REMEMBER: -> 
+    
+    You already have a flashlight and all you need is a "Battery" to use:
+    Using this item will reveal where the mosnter is. 
 
-    BLUEPRINT OF ITEM CRAFTING:
+BLUEPRINT OF ITEM CRAFTING: ->
+
         -> "Matches" and "Wooden stick" = Torch:
             Lights up the path where the item is.
         
@@ -21,18 +25,18 @@ GOAL: the goal of the game is to kill the monster and get your daughter back.
         
     
 
-    ---> TUTORIAL ON HOW THE GAME IS STRUCTURED <---
+---> TUTORIAL ON HOW THE GAME IS STRUCTURED <---
 
     First quesion:
     "would you like to craft an item (y/n)"
         
         pick either a "Torch" or "Pistol"
-    
+***
     Second question:
     "Would you like to use and item (y/n)"
         
         pick either a "Flashlight" or "Deagle" or "Torch"
-
+***
     Third question
     "Pick a path"
 
