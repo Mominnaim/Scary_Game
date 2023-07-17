@@ -36,7 +36,7 @@ class Game_engine(object):
             lore_path = random.choice(lore_paths)
 
             # Ask the user if they want to craft an item.
-            need_help = input(str("Would you like to craft an item? (y/n) -> "))
+            need_help = input(str("\nWould you like to craft an item? (y/n) -> "))
 
             # If the user picks an option that is not y or n, they have to repick.
             try:
@@ -55,7 +55,7 @@ class Game_engine(object):
                 if pick_an_item == "1":
                     self.father.create_torch(self.item.users_bagpack)
                 elif pick_an_item == "2":
-                    self.father.create_gun(self.item.users_bagpack)
+                    self.father.create_gun(self.item.users_bagpack,self.item.items_list)
                 else:
                     print("You did not pick one of the options given!")
             elif need_help.lower() == "n":
@@ -75,6 +75,7 @@ class Game_engine(object):
             if use_an_item == 'y':
                 print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Torch\n3. ---> Gun")
                 item_usage = input(str("==> "))
+                print()
                 if item_usage == "1":
                     self.father.use_item(self.item.users_bagpack, demon_path)
                 elif item_usage == "2":
@@ -97,7 +98,7 @@ class Game_engine(object):
 
             # If the user picks a path number that is not valid, they have to re-pick
             if a == 0:
-                print("NO GUNS!!")
+                print("Becareful and choose the right path\n")
                 while True:
                     try:
                         user_choice = int(input(f"Tunnel #{loop_count} "
@@ -126,7 +127,7 @@ class Game_engine(object):
 
             # If the user picks a path number that is not valid, they have to re-pick
             if a == 1:
-                print("GUNS!!")
+                print("You have a loaded Deagle, aim wisely!\n")
                 while True:
                     try:
                         user_choice = int(input(f"Tunnel #{loop_count} "
@@ -278,7 +279,7 @@ class Lore(object):
     def lore_story(self):
         lore_piece = random.choice(self.lorelist)
         self.lore_collection.append(lore_piece)
-        print(lore_piece, '\n')
+        print("You have found a lore to the story")
         print('Your current lore collection: ', self.lore_collection)
         self.lorelist.remove(lore_piece)
 
@@ -299,7 +300,7 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_bagpack = ["Battery", "Deagle", "Bullets","Bullets","Bullets","Bullets","Bullets"]
+    This_the_bagpack = ["Gunpowder","Magazine", "Pistol"]
     this_are_the_items = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
     stuff = Item(this_are_the_items, This_the_bagpack)
 
@@ -321,7 +322,10 @@ if __name__ == "__main__":
 # Need to create test for the game -- use if statements. ------> [CHECK]
 # What are the new things you are going to add to this game.------> [CHECK]
 
-# When use_pistol you have to choose a path and if you choose the demon path, you kill him. if not you wasted bullets
-# Once the pistol has been created you can take those pieces out the list.
-# ----> If the user uses the pistol, how will the loop work
-# The killing demon part of the game will be in the demon class -> Youcan either get eatin by him or kill him.
+# Clean up and get the other 2 percent done
+# README.MD talk about what the game is and how to play the game. Details please
+# Format it properly 
+# test function 
+#python main function
+
+# NEW GAME POKEMON - 
