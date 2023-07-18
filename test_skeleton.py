@@ -3,7 +3,7 @@ import random
 from skeleton_scary_game import Father
 from skeleton_scary_game import Item
 from skeleton_scary_game import Lore
-
+"""
 users_bagpack_1 = ["Pistol", "Gunpowder", "Magazine"]
 item_main = ['Pistol', 'Magazine', 'Gunpowder']
 users_bagpack_2 = ['Battery']
@@ -90,19 +90,48 @@ elif user_input == "3":
         else:
             print("There is nothing here, and that is how it should be. WORKS!!\n")
 
+"""
 
-"""This are the test that you need to complete today!"""
-# --- Father
-# use_item ----> check
-# create_torch ----> check
-# create_gun ----> check
-# use_torch ----> check
-# use_pistol
-# --- Item
-# collect_item ----> check
-# --- Lore
-# lore_story ----> check
-# lore_play ----> check
-# lore_size ----> check
-#
-#
+def father_test_one(Dad,users_bagpack_2,demon):
+        print("Running Father test one:")
+        Dad.use_item(users_bagpack_2,demon)
+        if users_bagpack_2:
+            print("Failed!")
+        else:
+            print("Passed")
+
+def main():
+
+    users_bagpack_1 = ["Pistol", "Gunpowder", "Magazine"]
+    item_main = ['Pistol', 'Magazine', 'Gunpowder']
+    users_bagpack_2 = ['Battery']
+    users_bagpack_3 = ["Torch"]
+    empty_bagpack = []
+    item_list = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
+    demon = 1
+    where_is_item = 3
+    lore_sto = ['The father was in the forrest with his child.  ', 'He turned around to see where his child went,'
+                                                               'as soon as he turned aorund, he saw a demon like '
+                                                               'figure take his child and disappear',
+            'Once he found his child, the demon was with her and asked him this question.',
+            'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies '
+            'right here in front of you."']
+    lore_none = []
+    lore_collect = []
+# If the user picks this path then they will find out who the demon was, and how he became that way.
+
+    Dad = Father()
+    Book = Lore(lore_none)
+    story = Lore(lore_sto)
+    pieces = Item(item_list, empty_bagpack)
+
+    father_test_one(Dad,users_bagpack_2,demon)
+
+
+if __name__ == "__main__":
+    main()
+    
+
+    
+
+    
