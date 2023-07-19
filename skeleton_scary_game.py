@@ -166,7 +166,7 @@ class Father(object):
     # This is where the item is acutally used and then removed after the usage.
     def use_item(self, bagpack, demon):
         if "Battery" in bagpack:
-            print(f"The demon is on {demon}. \n")
+            print(f"The demon is on {demon}. ")
             bagpack.remove("Battery")
         else:
             print("You do not have any batteries left to use.\n")
@@ -300,7 +300,7 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_bagpack = ["Gunpowder","Magazine", "Pistol"]
+    This_the_bagpack = ["Battery"]
     this_are_the_items = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
     stuff = Item(this_are_the_items, This_the_bagpack)
 
