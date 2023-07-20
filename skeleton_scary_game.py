@@ -181,9 +181,8 @@ class Father(object):
         if "Wooden stick" in bagpack and "Matches" in bagpack:
             print("Torch created!")
             # Remove the torch stick and matches from the inventory
-            bagpack.remove("torch stick")
-            bagpack.remove("matches")
-            bagpack.append("Torch")
+            bagpack.remove("Matches")
+            bagpack.append("Wooden stick")
             # Additional code to handle creating the torch
         else:
             print("You don't have all the required items to create a torch.")
@@ -260,11 +259,11 @@ class Item(object):
         self.users_bagpack.append(prize_item)
         print(f"You have {self.users_bagpack} \n")
 
-            # The user should not collect the same gun parts twice. It is a one and done thing
-            if prize_item == "Gunpowder" or "Pistol" or "Magazine":
-                self.item_list.remove(prize_item)
-            else:
-                pass
+        # The user should not collect the same gun parts twice. It is a one and done thing
+        if prize_item == "Gunpowder" or "Pistol" or "Magazine":
+            self.items_list.remove(prize_item)
+        else:
+            pass
 
         return self.users_bagpack
 
