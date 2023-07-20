@@ -1,4 +1,4 @@
-<h1 style="text-align:center">Pick Your Path</h1>
+<h1 style="text-align:center;">Pick Your Path</h1>
 
 
 __IDEA:__ 
