@@ -19,9 +19,9 @@ class Game_engine(object):
         # how many rounds you have survived,
         loop_count = 0
 
-        # Loop until 7 rounds have been reach and you win, the game is on a finite condition.
         while True:
 
+            # This will be used later if the user has a gun or not.
             a = 0
 
             # The path the demon will be on - randomizes every round
@@ -55,7 +55,7 @@ class Game_engine(object):
                 if pick_an_item == "1":
                     self.father.create_torch(self.item.users_bagpack)
                 elif pick_an_item == "2":
-                    self.father.create_gun(self.item.users_bagpack,self.item.items_list)
+                    self.father.create_gun(self.item.users_bagpack)
                 else:
                     print("You did not pick one of the options given!")
             elif need_help.lower() == "n":
@@ -72,6 +72,8 @@ class Game_engine(object):
                 print(str(d))
                 continue
 
+
+            # User input on what item they would like to use, and from there call in the function of the father class.
             if use_an_item == 'y':
                 print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Torch\n3. ---> Gun")
                 item_usage = input(str("==> "))
@@ -96,11 +98,13 @@ class Game_engine(object):
             # User picks their path
             loop_count += 1
 
-            # If the user picks a path number that is not valid, they have to re-pick
+            # This if will run if the user did not use the gun to kill the demon
             if a == 0:
                 print("Becareful and choose the right path\n")
                 while True:
                     try:
+
+                        # If the user picks a path number that is not valid, they have to re-pick
                         user_choice = int(input(f"Tunnel #{loop_count} "
                                                 f"Walk your path => "))
                         if user_choice < 1 or user_choice > 3:
@@ -125,11 +129,12 @@ class Game_engine(object):
                 elif chosen_path == lore_path:
                     self.lore.lore_play()
 
-            # If the user picks a path number that is not valid, they have to re-pick
+            # This if will run if the user does have a gun to kill the demon.
             if a == 1:
                 print("You have a loaded Deagle, aim wisely!\n")
                 while True:
                     try:
+                        # If the user picks a path number that is not valid, they have to re-pick
                         user_choice = int(input(f"Tunnel #{loop_count} "
                                                 f"Walk your path => "))
                         if user_choice < 1 or user_choice > 3:
@@ -184,7 +189,7 @@ class Father(object):
             print("You don't have all the required items to create a torch.")
 
     # This is where the gun is created, and once created the parts of the gun get removed from the list.
-    def create_gun(self, bagpack, item):
+    def create_gun(self, bagpack):
         if "Pistol" in bagpack and "Gunpowder" in bagpack and "Magazine" in bagpack:
             print("You have a gun. Ready to kill the demon, and get your daughter back?")
             print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
@@ -196,10 +201,6 @@ class Father(object):
             # The user gains a item since he had all the required parts
             bagpack.append("Deagle")
 
-            # Now the gun has been made, he doesnt need to make it again.
-            item.remove("Gunpowder")
-            item.remove("Magazine")
-            item.remove("Pistol")
         else:
             print("You don't have all the parts yet")
 
@@ -258,6 +259,12 @@ class Item(object):
         print(f"You have survived and you have found => {prize_item}")
         self.users_bagpack.append(prize_item)
         print(f"You have {self.users_bagpack} \n")
+
+            # The user should not collect the same gun parts twice. It is a one and done thing
+            if prize_item == "Gunpowder" or "Pistol" or "Magazine":
+                self.item_list.remove(prize_item)
+            else:
+                pass
 
         return self.users_bagpack
 
@@ -319,13 +326,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Need to create test for the game -- use if statements. ------> [CHECK]
-# What are the new things you are going to add to this game.------> [CHECK]
 
-# Clean up and get the other 2 percent done
-# README.MD talk about what the game is and how to play the game. Details please
-# Format it properly 
-# test function 
-#python main function
-
-# NEW GAME POKEMON - 
