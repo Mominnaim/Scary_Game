@@ -182,7 +182,8 @@ class Father(object):
             print("Torch created!")
             # Remove the torch stick and matches from the inventory
             bagpack.remove("Matches")
-            bagpack.append("Wooden stick")
+            bagpack.remove("Wooden stick")
+            bagpack.append("Torch")
             # Additional code to handle creating the torch
         else:
             print("You don't have all the required items to create a torch.")
