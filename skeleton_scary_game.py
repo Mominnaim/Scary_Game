@@ -27,13 +27,16 @@ class Game_engine(object):
             # The path the demon will be on - randomizes every round
             demon_path = random.choice(self.paths)
 
+
             # Randomly assign the item path
             item_paths = [path for path in self.paths if path != demon_path]
             item_path = random.choice(item_paths)
 
+
             # This is where the lore is
             lore_paths = [path for path in self.paths if (path != demon_path and path not in item_path)]
             lore_path = random.choice(lore_paths)
+
 
             # Ask the user if they want to craft an item.
             need_help = input(str("\nWould you like to craft an item? (y/n) -> "))
@@ -259,15 +262,13 @@ class Item(object):
         print(f"You have survived and you have found => {prize_item}")
         self.users_bagpack.append(prize_item)
         print(f"You have {self.users_bagpack} \n")
-
+        
         # The user should not collect the same gun parts twice. It is a one and done thing
-        if prize_item == "Gunpowder" or "Pistol" or "Magazine":
+        if prize_item in ["Gunpowder", "Pistol", "Magazine"]:
             self.items_list.remove(prize_item)
-        else:
-            pass
 
         return self.users_bagpack
-
+        
 
 # This is the lore object, and will be sent to the game engine also.
 class Lore(object):
