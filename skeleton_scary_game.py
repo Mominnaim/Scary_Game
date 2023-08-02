@@ -8,8 +8,6 @@ print("Sheena: Yes daddy, I will make sure to never leave your sight! Now can we
 print("Narrator: They set off for a walk not knowing that this might be their last.")
 
 
-
-
 # This is where the actual game will run from
 class Game_engine(object):
 
@@ -36,21 +34,19 @@ class Game_engine(object):
             # The path the demon will be on - randomizes every round
             demon_path = random.choice(self.paths)
 
-
             # Randomly assign the item path
             item_paths = random.choice([path for path in self.paths if path != demon_path])
 
-
             # This is where the lore is
             lore_path = random.choice([path for path in self.paths if (path != demon_path and path not in item_paths)])
-
 
             # The user can craft an item if they have all the required parts for it. If they click y the they will be prompted to pick what item they want to craft.
             # If the user picks n then it will just display their current bagpack.
             while True:
 
                 # Ask the user if they want to craft an item.
-                need_help = input(str("\nIf you need to see the crafting manual, press (h) \nWould you like to craft an item? (y/n)\n=> "))
+                need_help = input(str(
+                    "\nIf you need to see the crafting manual, press (h) \nWould you like to craft an item? (y/n)\n=> "))
 
                 # If the user picks an option that is not y or n, they have to repick.
                 try:
@@ -61,9 +57,11 @@ class Game_engine(object):
                     continue
 
                 if need_help.lower() == 'h':
-                    print("\nFlashlight -> You already have a flashlight, you just need to collect [Batteries] to use it = Reveals the demon path\n")
+                    print(
+                        "\nFlashlight -> You already have a flashlight, you just need to collect [Batteries] to use it = Reveals the demon path\n")
                     print("Torch -> You need [Matches] & [Wooden stick] = reveals what path the item is on\n")
-                    print("Deagle -> You need [Pistol] & [Gunpowder] & [Magazine] = You can kill the demon but only if you have [Bullets]\n")
+                    print(
+                        "Deagle -> You need [Pistol] & [Gunpowder] & [Magazine] = You can kill the demon but only if you have [Bullets]\n")
                 elif need_help.lower() == "y":
                     print("\nPick an item you would like to craft.")
                     pick_an_item = input(str("1.----->   Torch \n2.----->   Pistol \n==> "))
@@ -90,7 +88,6 @@ class Game_engine(object):
             except ValueError as d:
                 print(str(d))
                 continue
-
 
             # User input on what item they would like to use, and from there call in the function of the father class.
             if use_an_item == 'y':
@@ -146,7 +143,8 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == lore_path:
-                    self.lore.lore_play()
+                    print("You have survived!\n")
+                    # self.lore.lore_play()
 
             # This if will run if the user does have a gun to kill the demon.
             if guns_or_noguns == 1:
@@ -176,7 +174,7 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == lore_path:
-                    self.lore.lore_play()
+                    # self.lore.lore_play()
                     self.demon.missed_demon()
 
 
@@ -278,13 +276,13 @@ class Item(object):
         print(f"You have survived and you have found => {prize_item}")
         self.users_bagpack.append(prize_item)
         print(f"You have {self.users_bagpack} \n")
-        
+
         # The user should not collect the same gun parts twice. It is a one and done thing
         if prize_item in ["Gunpowder", "Pistol", "Magazine"]:
             self.items_list.remove(prize_item)
 
         return self.users_bagpack
-        
+
 
 # This is the lore object, and will be sent to the game engine also.
 class Lore(object):
@@ -342,5 +340,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
