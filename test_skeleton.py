@@ -1,15 +1,10 @@
 import random
 
-from .skeleton_scary_game import Father,Item,Lore
+from .scary_game import Father,Item
 
 
 item_list = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
-lore_sto = ['The father was in the forrest with his child.  ', 'He turned around to see where his child went,'
-                                                               'as soon as he turned aorund, he saw a demon like '
-                                                               'figure take his child and disappear',
-            'Once he found his child, the demon was with her and asked him this question.',
-            'The demon said "If you take my spot as the demon then your child will be set free, if not shes dies '
-            'right here in front of you."']
+
 lore_none = []
 battery = "Battery"
 torch = "Torch"
@@ -64,16 +59,6 @@ def test_item_one():
     assert len(empty_bagpack) == 1
 
 
-def test_lore_one():
-    story = Lore(lore_sto)
-    story.lore_story()
-    assert len(story.lore_collection) == 1
-
-
-def test_lore_two():
-    Book = Lore(lore_none)
-    Book.lore_play()
-    assert Book.lore_collection
 
 
     
