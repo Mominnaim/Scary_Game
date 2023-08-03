@@ -1,11 +1,27 @@
 import random
+import time
 
 print("Narrator: The father and his daughter are on vacation in a log cabin in the forrest. ")
+time.sleep(1)
 print("Daddy: Would you like to go on a late night walk and clear our mind?")
+time.sleep(1)
 print("Sheena: yes daddy, the weather is really nice too!")
+time.sleep(1)
 print("Daddy: Make sure you don't leave my side ok, and do not let go of my hand.")
+time.sleep(1)
 print("Sheena: Yes daddy, I will make sure to never leave your sight! Now can we go dad!")
+time.sleep(1)
 print("Narrator: They set off for a walk not knowing that this might be their last.")
+
+battery = "Battery"
+torch = "Torch"
+deagle = "Deagle"
+matches = "Matches"
+woodenstick = "Wooden stick"
+bullets = "Bullets"
+magazine = "Magazine"
+pistol ="Pistol"
+gunpowder = "Gunpowder"
 
 
 # This is where the actual game will run from
@@ -41,7 +57,7 @@ class Game_engine(object):
 
             # The user can craft an item if they have all the required parts for it. If they click y the they will be
             # prompted to pick what item they want to craft. If the user picks n then it will just display their
-            # current bagpack.
+            # current backpack.
             while True:
 
                 # Ask the user if they want to craft an item.
@@ -69,15 +85,15 @@ class Game_engine(object):
                     pick_an_item = input(str("1.----->   Torch \n2.----->   Pistol \n==> "))
                     print()
                     if pick_an_item == "1":
-                        self.father.create_torch(self.item.users_bagpack)
+                        self.father.create_torch(self.item.users_backpack)
                         break
                     elif pick_an_item == "2":
-                        self.father.create_gun(self.item.users_bagpack)
+                        self.father.create_gun(self.item.users_backpack)
                         break
                     else:
                         print("You did not pick one of the options given!")
                 elif need_help.lower() == "n":
-                    print("You have these items on your bagpack:", self.item.users_bagpack)
+                    print("You have these items on your backpack:", self.item.users_backpack)
                     print()
                     break
 
@@ -97,12 +113,12 @@ class Game_engine(object):
                 item_usage = input(str("==> "))
                 print()
                 if item_usage == "1":
-                    self.father.use_item(self.item.users_bagpack, demon_path)
+                    self.father.use_item(self.item.users_backpack, demon_path)
                 elif item_usage == "2":
-                    self.father.use_torch(self.item.users_bagpack, item_path)
+                    self.father.use_torch(self.item.users_backpack, item_paths)
                 elif item_usage == "3":
-                    if "Deagle" in self.item.users_bagpack and "Bullets" in self.item.users_bagpack:
-                        self.father.use_pistol(self.item.users_bagpack)
+                    if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
+                        self.father.use_pistol(self.item.users_backpack)
                         a = 1
                     else:
                         print("You do not have all the gun parts")
@@ -145,7 +161,9 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == lore_path:
-                    print("You have survived!\n")
+                    print("You have survived!\nand also collected a battery")
+                    self.item.users_backpack.append("Battery")
+
 
     
             # This if will run if the user does have a gun to kill the demon.
@@ -176,6 +194,8 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == lore_path:
+                    print("You have survived!\nand also collected a battery")
+                    self.item.users_backpack.append(battery)
                     self.demon.missed_demon()
 
 
@@ -187,54 +207,54 @@ class Father(object):
     """
 
     # This is where the item is acutally used and then removed after the usage.
-    def use_item(self, bagpack, demon):
-        if "Battery" in bagpack:
+    def use_item(self, backpack, demon):
+        if "Battery" in backpack:
             print(f"The demon is on {demon}. ")
-            bagpack.remove("Battery")
+            backpack.remove("Battery")
         else:
             print("You do not have any batteries left to use.\n")
 
     # This is where the torch is created
-    def create_torch(self, bagpack):
-        if "Wooden stick" in bagpack and "Matches" in bagpack:
+    def create_torch(self, backpack):
+        if woodenstick in backpack and matches in backpack:
             print("Torch created!")
             # Remove the torch stick and matches from the inventory
-            bagpack.remove("Matches")
-            bagpack.remove("Wooden stick")
-            bagpack.append("Torch")
+            backpack.remove(matches)
+            backpack.remove(woodenstick)
+            backpack.append(torch)
             # Additional code to handle creating the torch
         else:
             print("You don't have all the required items to create a torch.")
 
     # This is where the gun is created, and once created the parts of the gun get removed from the list.
-    def create_gun(self, bagpack):
-        if "Pistol" in bagpack and "Gunpowder" in bagpack and "Magazine" in bagpack:
+    def create_gun(self, backpack):
+        if pistol in backpack and gunpowder in backpack and magazine in backpack:
             print("You have a gun. Ready to kill the demon, and get your daughter back?")
             print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
-            # This are the items being removed from the bagpack
-            bagpack.remove("Gunpowder")
-            bagpack.remove("Magazine")
-            bagpack.remove("Pistol")
+            # This are the items being removed from the backpack
+            backpack.remove(gunpowder)
+            backpack.remove(magazine)
+            backpack.remove(pistol)
 
             # The user gains a item since he had all the required parts
-            bagpack.append("Deagle")
+            backpack.append(deagle)
 
         else:
             print("You don't have all the parts yet")
 
     # This is where you can use the torch
-    def use_torch(self, bagpack, item_path):
-        if "Torch" in bagpack:
+    def use_torch(self, backpack, item_path):
+        if "Torch" in backpack:
             print(f"The item is on {item_path}. \n")
-            bagpack.remove("Torch")
+            backpack.remove(torch)
         else:
             print("You do not have a torch\n")
 
     # This is where you can use the pistol.
-    def use_pistol(self, bagpack):
-        if "Deagle" in bagpack and "Bullets" in bagpack:
+    def use_pistol(self, backpack):
+        if "Deagle" in backpack and "Bullets" in backpack:
             print("You need to pick the path with the demon and you will kill him and get your daughter back\n")
-            bagpack.remove("Bullets")
+            backpack.remove("Bullets")
         else:
             print("You do not have all the ")
 
@@ -262,27 +282,27 @@ class Evil_demon(object):
 # This is the item object, and will be sent to the game engine as well.
 class Item(object):
     """
-    This is the item class where the item list and the user bagpack is intialized and if
+    This is the item class where the item list and the user backpack is intialized and if
     you walk the item path then you collect that item. Once the item has been used then it gets removed.
     """
 
     # These are the variables that are in this class. and will only be in this class.
-    def __init__(self, items_list, users_bagpack):
+    def __init__(self, items_list, users_backpack):
         self.items_list = items_list
-        self.users_bagpack = users_bagpack
+        self.users_backpack = users_backpack
 
-    # If the user picks this path, the user collects the item and will be sent to his bagpack
+    # If the user picks this path, the user collects the item and will be sent to his backpack
     def collect_item(self):
         prize_item = random.choice(self.items_list)
         print(f"You have survived and you have found => {prize_item}")
-        self.users_bagpack.append(prize_item)
-        print(f"You have {self.users_bagpack} \n")
+        self.users_backpack.append(prize_item)
+        print(f"You have {self.users_backpack} \n")
 
         # The user should not collect the same gun parts twice. It is a one and done thing
-        if prize_item in ["Gunpowder", "Pistol", "Magazine"]:
+        if prize_item in [gunpowder, magazine, pistol]:
             self.items_list.remove(prize_item)
 
-        return self.users_bagpack
+        return self.users_backpack
 
 
 # instanciating all the classes to objects
@@ -292,9 +312,9 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_bagpack = ["Battery"]
-    this_are_the_items = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
-    stuff = Item(this_are_the_items, This_the_bagpack)
+    This_the_backpack = [battery]
+    this_are_the_items = [battery, matches, woodenstick, bullets, magazine, pistol, gunpowder]
+    stuff = Item(this_are_the_items, This_the_backpack)
 
     # calling the actual game with the given parameters
     start = Game_engine(Anunnaki, stuff, Ali)
