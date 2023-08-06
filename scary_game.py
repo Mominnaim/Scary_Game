@@ -92,6 +92,7 @@ class Game_engine(object):
                     else:
                         print("You did not pick one of the options given!")
                 elif need_help.lower() == "n":
+                    self.item.users_backpack.sort()
                     print("You have these items on your backpack:", self.item.users_backpack)
                     print()
                     break
@@ -286,7 +287,7 @@ class Item(object):
     # These are the variables that are in this class. and will only be in this class.
     def __init__(self, items_list, users_backpack):
         self.items_list = items_list
-        self.users_backpack = sorted(users_backpack)
+        self.users_backpack = users_backpack
 
     # If the user picks this path, the user collects the item and will be sent to his backpack
     def collect_item(self):
@@ -300,8 +301,6 @@ class Item(object):
         if prize_item in [magazine, pistol]:
             self.items_list.remove(prize_item)
 
-        return self.users_backpack
-
 
 # instanciating all the classes to objects
 
@@ -310,7 +309,8 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_backpack = sorted([battery, matches, battery, deagle])
+    This_the_backpack = [battery, matches, battery, deagle]
+    This_the_backpack.sort()
     this_are_the_items = [battery, matches, bullets, magazine, pistol]
     stuff = Item(this_are_the_items, This_the_backpack)
 
