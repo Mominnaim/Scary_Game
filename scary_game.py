@@ -1,6 +1,6 @@
 import random
 import time
-
+"""
 print("Narrator: The father and his daughter are on vacation in a log cabin in the forrest. ")
 time.sleep(1)
 print("Daddy: Would you like to go on a late night walk and clear our mind?")
@@ -12,22 +12,21 @@ time.sleep(1)
 print("Sheena: Yes daddy, I will make sure to never leave your sight! Now can we go dad!")
 time.sleep(1)
 print("Narrator: They set off for a walk not knowing that this might be their last.")
+"""
 
 battery = "Battery"
-torch = "Torch"
+fire_lamp = "Lamp"
 deagle = "Deagle"
 matches = "Matches"
-woodenstick = "Wooden stick"
 bullets = "Bullets"
 magazine = "Magazine"
-pistol ="Pistol"
-gunpowder = "Gunpowder"
+pistol = "Pistol"
 
 
 # This is where the actual game will run from
 class Game_engine(object):
 
-    # This is the constructer method, this is what will be passed to the play() for the game to run
+    # This is the constructor method, this is what will be passed to the play() for the game to run
     def __init__(self, demon, item, father, ):
         self.demon = demon
         self.item = item
@@ -76,16 +75,16 @@ class Game_engine(object):
                     print(
                         "\nFlashlight -> You already have a flashlight, you just need to collect [Batteries] to use "
                         "it = Reveals the demon path\n")
-                    print("Torch -> You need [Matches] & [Wooden stick] = reveals what path the item is on\n")
+                    print("Fire lamp -> You need [Matches] & [Wooden stick] = reveals what path the item is on\n")
                     print(
-                        "Deagle -> You need [Pistol] & [Gunpowder] & [Magazine] = You can kill the demon but only if "
+                        "Deagle -> You need [Pistol] & [Magazine] = You can kill the demon but only if "
                         "you have [Bullets]\n")
                 elif need_help.lower() == "y":
                     print("\nPick an item you would like to craft.")
-                    pick_an_item = input(str("1.----->   Torch \n2.----->   Pistol \n==> "))
+                    pick_an_item = input(str("1.----->   Fire Lamp \n2.----->   Pistol \n==> "))
                     print()
                     if pick_an_item == "1":
-                        self.father.create_torch(self.item.users_backpack)
+                        self.father.create_fire_lamp(self.item.users_backpack)
                         break
                     elif pick_an_item == "2":
                         self.father.create_gun(self.item.users_backpack)
@@ -109,17 +108,17 @@ class Game_engine(object):
 
             # User input on what item they would like to use, and from there call in the function of the father class.
             if use_an_item == 'y':
-                print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Torch\n3. ---> Gun")
+                print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Fire lamp\n3. ---> Gun")
                 item_usage = input(str("==> "))
                 print()
                 if item_usage == "1":
                     self.father.use_item(self.item.users_backpack, demon_path)
                 elif item_usage == "2":
-                    self.father.use_torch(self.item.users_backpack, item_paths)
+                    self.father.use_fire_lamp(self.item.users_backpack, item_paths)
                 elif item_usage == "3":
                     if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
                         self.father.use_pistol(self.item.users_backpack)
-                        a = 1
+                        guns_or_noguns = 1
                     else:
                         print("You do not have all the gun parts")
                 else:
@@ -164,8 +163,6 @@ class Game_engine(object):
                     print("You have survived!\nand also collected a battery")
                     self.item.users_backpack.append("Battery")
 
-
-    
             # This if will run if the user does have a gun to kill the demon.
             if guns_or_noguns == 1:
                 print("You have a loaded Deagle, aim wisely!\n")
@@ -214,41 +211,41 @@ class Father(object):
         else:
             print("You do not have any batteries left to use.\n")
 
-    # This is where the torch is created
-    def create_torch(self, backpack):
-        if woodenstick in backpack and matches in backpack:
-            print("Torch created!")
-            # Remove the torch stick and matches from the inventory
+    # This is where the Fire lamp is created
+    def create_fire_lamp(self, backpack):
+        if matches in backpack:
+            print("Fire lamp created!")
+            # Remove the Fire lamp stick and matches from the inventory
             backpack.remove(matches)
-            backpack.remove(woodenstick)
-            backpack.append(torch)
-            # Additional code to handle creating the torch
+            backpack.append(fire_lamp)
+            backpack.sort()
+            # Additional code to handle creating the Fire lamp
         else:
-            print("You don't have all the required items to create a torch.")
+            print("You don't have all the required items to create a Fire lamp.")
 
     # This is where the gun is created, and once created the parts of the gun get removed from the list.
     def create_gun(self, backpack):
-        if pistol in backpack and gunpowder in backpack and magazine in backpack:
+        if pistol in backpack and magazine in backpack:
             print("You have a gun. Ready to kill the demon, and get your daughter back?")
             print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
             # This are the items being removed from the backpack
-            backpack.remove(gunpowder)
             backpack.remove(magazine)
             backpack.remove(pistol)
 
             # The user gains a item since he had all the required parts
             backpack.append(deagle)
+            backpack.sort()
 
         else:
             print("You don't have all the parts yet")
 
-    # This is where you can use the torch
-    def use_torch(self, backpack, item_path):
-        if "Torch" in backpack:
+    # This is where you can use the Fire lamp
+    def use_fire_lamp(self, backpack, item_path):
+        if "Lamp" in backpack:
             print(f"The item is on {item_path}. \n")
-            backpack.remove(torch)
+            backpack.remove(fire_lamp)
         else:
-            print("You do not have a torch\n")
+            print("You do not have a fire lamp\n")
 
     # This is where you can use the pistol.
     def use_pistol(self, backpack):
@@ -289,17 +286,18 @@ class Item(object):
     # These are the variables that are in this class. and will only be in this class.
     def __init__(self, items_list, users_backpack):
         self.items_list = items_list
-        self.users_backpack = users_backpack
+        self.users_backpack = sorted(users_backpack)
 
     # If the user picks this path, the user collects the item and will be sent to his backpack
     def collect_item(self):
         prize_item = random.choice(self.items_list)
         print(f"You have survived and you have found => {prize_item}")
-        self.users_backpack.append(prize_item)
+        self.users_backpack.append(str(prize_item))
+        self.users_backpack.sort()
         print(f"You have {self.users_backpack} \n")
 
         # The user should not collect the same gun parts twice. It is a one and done thing
-        if prize_item in [gunpowder, magazine, pistol]:
+        if prize_item in [magazine, pistol]:
             self.items_list.remove(prize_item)
 
         return self.users_backpack
@@ -312,8 +310,8 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_backpack = [battery]
-    this_are_the_items = [battery, matches, woodenstick, bullets, magazine, pistol, gunpowder]
+    This_the_backpack = sorted([battery, matches, battery, deagle])
+    this_are_the_items = [battery, matches, bullets, magazine, pistol]
     stuff = Item(this_are_the_items, This_the_backpack)
 
     # calling the actual game with the given parameters
