@@ -20,7 +20,11 @@ phrase_one = ("NARRATOR: The father and his daughter are on vacation in a log ca
               "but what he sees terrifies him.\n"
               "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
 
-buffer_print(phrase_one)
+skip = input("Would you like to skip the cutscene? (y/n) \n=> ")
+if skip == "y":
+    pass
+elif skip == "n":
+    buffer_print(phrase_one)
 
 battery = "Battery"
 deagle = "Deagle"
@@ -28,7 +32,6 @@ matches = "Matches"
 bullets = "Bullets"
 magazine = "Magazine"
 pistol = "Pistol"
-safe_items = random.choice([matches, battery])
 
 
 # This is where the actual game will run from
@@ -65,6 +68,8 @@ class Game_engine(object):
             # The user will be asked if they would like to use an item, if they pick y then they will choose what item,
             # If they pick n then they will n, it will continue on with the game.
             while True:
+
+                print(f"You have {self.item.users_backpack}")
 
                 try:
                     use_an_item = input(
@@ -140,6 +145,7 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == safe_path:
+                    safe_items = random.choice([matches, battery])
                     self.item.users_backpack.append(safe_items)
                     print(f"You have survived!\nand also collected a {safe_items}")
 
@@ -171,6 +177,7 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == safe_path:
+                    safe_items = random.choice([matches, battery])
                     self.item.users_backpack.append(safe_items)
                     print(f"You have survived!\nand also collected a {safe_items}")
                     self.demon.missed_demon()
@@ -258,7 +265,6 @@ class Item(object):
         print(f"You have survived and you have found => {prize_item}")
         self.users_backpack.append(str(prize_item))
         self.users_backpack.sort()
-        print(f"You have {self.users_backpack} \n")
 
         # The user should not collect the same gun parts twice. It is a one and done thing
         if prize_item in [magazine, pistol]:
@@ -275,8 +281,8 @@ def main():
 
     This_the_backpack = [battery]
     This_the_backpack.sort()
-    this_are_the_items = [battery, matches, bullets, magazine, pistol]
-    stuff = Item(this_are_the_items, This_the_backpack)
+    gun_items = [bullets, magazine, pistol]
+    stuff = Item(gun_items, This_the_backpack)
 
     # calling the actual game with the given parameters
     start = Game_engine(Anunnaki, stuff, Ali)
