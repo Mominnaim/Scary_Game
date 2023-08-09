@@ -1,26 +1,34 @@
 import random
 import time
-"""
-print("Narrator: The father and his daughter are on vacation in a log cabin in the forrest. ")
-time.sleep(1)
-print("Daddy: Would you like to go on a late night walk and clear our mind?")
-time.sleep(1)
-print("Sheena: yes daddy, the weather is really nice too!")
-time.sleep(1)
-print("Daddy: Make sure you don't leave my side ok, and do not let go of my hand.")
-time.sleep(1)
-print("Sheena: Yes daddy, I will make sure to never leave your sight! Now can we go dad!")
-time.sleep(1)
-print("Narrator: They set off for a walk not knowing that this might be their last.")
-"""
+import sys
+
+
+def buffer_print(phrase):
+    for i in phrase:
+        sys.stdout.flush()
+        print(i, end="")
+        time.sleep(.05)
+
+
+phrase_one = ("NARRATOR: The father and his daughter are on vacation in a log cabin in the forrest.\n"
+              "DADDY: Would you like to go on a late night walk and clear our mind?\n"
+              "SHEENA: yes DADDY, the weather is really nice too!\n"
+              "DADDY: Make sure you don't leave my side ok, and do not let go of my hand.\n"
+              "SHEENA: Yes DADDY, I will make sure to never leave your sight! Now can we go dad!\n"
+              "NARRATOR: They set off for a walk not knowing that this might be their last.\n"
+              "NARRATOR: On the walk they go. While on the walk the father looks behind to see if her daughter is there, \n"
+              "but what he sees terrifies him.\n"
+              "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
+
+buffer_print(phrase_one)
 
 battery = "Battery"
-fire_lamp = "Lamp"
 deagle = "Deagle"
 matches = "Matches"
 bullets = "Bullets"
 magazine = "Magazine"
 pistol = "Pistol"
+safe_items = random.choice([matches, battery])
 
 
 # This is where the actual game will run from
@@ -52,78 +60,49 @@ class Game_engine(object):
             item_paths = random.choice([path for path in self.paths if path != demon_path])
 
             # This is where the lore is
-            lore_path = random.choice([path for path in self.paths if (path != demon_path and path not in item_paths)])
-
-            # The user can craft an item if they have all the required parts for it. If they click y the they will be
-            # prompted to pick what item they want to craft. If the user picks n then it will just display their
-            # current backpack.
-            while True:
-
-                # Ask the user if they want to craft an item.
-                need_help = input(str(
-                    "\nIf you need to see the crafting manual, press (h) \nWould you like to craft an item? (y/n)\n=> "))
-
-                # If the user picks an option that is not y or n, they have to repick.
-                try:
-                    if need_help.lower() != "y" and need_help.lower() != "n" and need_help.lower() != "h":
-                        raise ValueError("Invalid input. Please pick 'y', 'n', or 'h'.")
-                except ValueError as e:
-                    print(str(e))
-                    continue
-
-                if need_help.lower() == 'h':
-                    print(
-                        "\nFlashlight -> You already have a flashlight, you just need to collect [Batteries] to use "
-                        "it = Reveals the demon path\n")
-                    print("Fire lamp -> You need [Matches] & [Wooden stick] = reveals what path the item is on\n")
-                    print(
-                        "Deagle -> You need [Pistol] & [Magazine] = You can kill the demon but only if "
-                        "you have [Bullets]\n")
-                elif need_help.lower() == "y":
-                    print("\nPick an item you would like to craft.")
-                    pick_an_item = input(str("1.----->   Fire Lamp \n2.----->   Pistol \n==> "))
-                    print()
-                    if pick_an_item == "1":
-                        self.father.create_fire_lamp(self.item.users_backpack)
-                        break
-                    elif pick_an_item == "2":
-                        self.father.create_gun(self.item.users_backpack)
-                        break
-                    else:
-                        print("You did not pick one of the options given!")
-                elif need_help.lower() == "n":
-                    self.item.users_backpack.sort()
-                    print("You have these items on your backpack:", self.item.users_backpack)
-                    print()
-                    break
+            safe_path = random.choice([path for path in self.paths if (path != demon_path and path not in item_paths)])
 
             # The user will be asked if they would like to use an item, if they pick y then they will choose what item,
             # If they pick n then they will n, it will continue on with the game.
-            try:
-                use_an_item = input(str("\nWould you like to use an Item (y/n) => "))
-                if use_an_item.lower() != 'y' and use_an_item.lower() != 'n':
-                    raise ValueError("PLEASE ENTER y or n!")
-            except ValueError as d:
-                print(str(d))
-                continue
+            while True:
 
-            # User input on what item they would like to use, and from there call in the function of the father class.
-            if use_an_item == 'y':
-                print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Fire lamp\n3. ---> Gun")
-                item_usage = input(str("==> "))
-                print()
-                if item_usage == "1":
-                    self.father.use_item(self.item.users_backpack, demon_path)
-                elif item_usage == "2":
-                    self.father.use_fire_lamp(self.item.users_backpack, item_paths)
-                elif item_usage == "3":
-                    if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
-                        self.father.use_pistol(self.item.users_backpack)
-                        guns_or_noguns = 1
+                try:
+                    use_an_item = input(
+                        str("\nWould you like to use an Item (y/n)\nOr type (h) for item usage info\n => "))
+                    if use_an_item.lower() != 'y' and use_an_item.lower() != 'n' and use_an_item.lower() != "h":
+                        raise ValueError("PLEASE ENTER y, n ,h!")
+                except ValueError as d:
+                    print(str(d))
+                    continue
+
+                # User input on what item they would like to use, and from there call in the function of the father class.
+                if use_an_item == 'y':
+                    print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Fire lamp\n3. ---> Gun")
+                    item_usage = input(str("==> "))
+                    print()
+                    if item_usage == "1":
+                        self.father.use_item(self.item.users_backpack, demon_path)
+                        break
+                    elif item_usage == "2":
+                        self.father.use_fire_lamp(self.item.users_backpack, item_paths)
+                        break
+                    elif item_usage == "3":
+                        if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
+                            self.father.use_pistol(self.item.users_backpack)
+                            guns_or_noguns = 1
+                            break
+                        else:
+                            print("You do not have all the gun parts")
                     else:
-                        print("You do not have all the gun parts")
-                else:
-                    print("That is not an option.\n")
+                        print("That is not an option.\n")
+                elif use_an_item == "h":
+                    print("Flashlight -> You need 'Batteries' to use the flashlight and it reveals the demon path\n"
+                          "Fire lamp -> You need 'Matches' to light the fire lamp and it reveals the item path\n"
+                          "Gun -> You need a 'Magazine' & 'Pistol' but need 'Bullets' to actualy use the gun, you have the"
+                          "ability to kill the demon and win the game.\n")
+                elif use_an_item == "n":
+                    print(f"These are the items you have in your backpack {self.item.users_backpack}")
+                    break
 
             # Display the available paths
             for i, path in enumerate(self.paths):
@@ -160,9 +139,9 @@ class Game_engine(object):
 
 
                 # If the user picks this path then nothing happens but just run the loop again.
-                elif chosen_path == lore_path:
-                    print("You have survived!\nand also collected a battery")
-                    self.item.users_backpack.append("Battery")
+                elif chosen_path == safe_path:
+                    self.item.users_backpack.append(safe_items)
+                    print(f"You have survived!\nand also collected a {safe_items}")
 
             # This if will run if the user does have a gun to kill the demon.
             if guns_or_noguns == 1:
@@ -191,10 +170,12 @@ class Game_engine(object):
                     self.demon.missed_demon()
 
                 # If the user picks this path then nothing happens but just run the loop again.
-                elif chosen_path == lore_path:
-                    print("You have survived!\nand also collected a battery")
-                    self.item.users_backpack.append(battery)
+                elif chosen_path == safe_path:
+                    self.item.users_backpack.append(safe_items)
+                    print(f"You have survived!\nand also collected a {safe_items}")
                     self.demon.missed_demon()
+
+            self.father.create_gun(self.item.users_backpack)
 
 
 class Father(object):
@@ -204,31 +185,32 @@ class Father(object):
 
     """
 
-    # This is where the item is acutally used and then removed after the usage.
+    # This is where the item is actually used and then removed after the usage.
     def use_item(self, backpack, demon):
-        if "Battery" in backpack:
+        if battery in backpack:
             print(f"The demon is on {demon}. ")
             backpack.remove("Battery")
         else:
             print("You do not have any batteries left to use.\n")
 
-    # This is where the Fire lamp is created
-    def create_fire_lamp(self, backpack):
+    # This is where you can use the Fire lamp
+    def use_fire_lamp(self, backpack, item_path):
         if matches in backpack:
-            print("Fire lamp created!")
-            # Remove the Fire lamp stick and matches from the inventory
+            print(f"The item is on {item_path}. \n")
             backpack.remove(matches)
-            backpack.append(fire_lamp)
-            backpack.sort()
-            # Additional code to handle creating the Fire lamp
         else:
-            print("You don't have all the required items to create a Fire lamp.")
+            print("You do not have a fire lamp\n")
 
-    # This is where the gun is created, and once created the parts of the gun get removed from the list.
+    # This is where you can use the pistol.
+    def use_pistol(self, backpack):
+        if deagle in backpack and bullets in backpack:
+            print("You need to pick the path with the demon and you will kill him and get your daughter back\n")
+            backpack.remove("Bullets")
+        else:
+            print("You do not have all the parts")
+
     def create_gun(self, backpack):
         if pistol in backpack and magazine in backpack:
-            print("You have a gun. Ready to kill the demon, and get your daughter back?")
-            print("Now that you have a Deagle, you will only have to collect the bullets. Don't miss!")
             # This are the items being removed from the backpack
             backpack.remove(magazine)
             backpack.remove(pistol)
@@ -236,25 +218,6 @@ class Father(object):
             # The user gains a item since he had all the required parts
             backpack.append(deagle)
             backpack.sort()
-
-        else:
-            print("You don't have all the parts yet")
-
-    # This is where you can use the Fire lamp
-    def use_fire_lamp(self, backpack, item_path):
-        if "Lamp" in backpack:
-            print(f"The item is on {item_path}. \n")
-            backpack.remove(fire_lamp)
-        else:
-            print("You do not have a fire lamp\n")
-
-    # This is where you can use the pistol.
-    def use_pistol(self, backpack):
-        if "Deagle" in backpack and "Bullets" in backpack:
-            print("You need to pick the path with the demon and you will kill him and get your daughter back\n")
-            backpack.remove("Bullets")
-        else:
-            print("You do not have all the ")
 
 
 # This is the evil demon object, and it will be sent to the game_engine
@@ -302,6 +265,7 @@ class Item(object):
             self.items_list.remove(prize_item)
 
 
+
 # instanciating all the classes to objects
 
 def main():
@@ -309,7 +273,7 @@ def main():
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_backpack = [battery, matches, battery, deagle]
+    This_the_backpack = [battery]
     This_the_backpack.sort()
     this_are_the_items = [battery, matches, bullets, magazine, pistol]
     stuff = Item(this_are_the_items, This_the_backpack)
