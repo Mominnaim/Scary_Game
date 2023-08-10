@@ -3,29 +3,6 @@ import time
 import sys
 
 
-def buffer_print(phrase):
-    for i in phrase:
-        sys.stdout.flush()
-        print(i, end="")
-        time.sleep(.05)
-
-
-phrase_one = ("NARRATOR: The father and his daughter are on vacation in a log cabin in the forrest.\n"
-              "DADDY: Would you like to go on a late night walk and clear our mind?\n"
-              "SHEENA: yes DADDY, the weather is really nice too!\n"
-              "DADDY: Make sure you don't leave my side ok, and do not let go of my hand.\n"
-              "SHEENA: Yes DADDY, I will make sure to never leave your sight! Now can we go dad!\n"
-              "NARRATOR: They set off for a walk not knowing that this might be their last.\n"
-              "NARRATOR: On the walk they go. While on the walk the father looks behind to see if her daughter is there, \n"
-              "but what he sees terrifies him.\n"
-              "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
-
-skip = input("Would you like to skip the cutscene? (y/n) \n=> ")
-if skip == "y":
-    pass
-elif skip == "n":
-    buffer_print(phrase_one)
-
 battery = "Battery"
 deagle = "Deagle"
 matches = "Matches"
@@ -38,13 +15,12 @@ pistol = "Pistol"
 class Game_engine(object):
 
     # This is the constructor method, this is what will be passed to the play() for the game to run
-    def __init__(self, demon, item, father, ):
+    def __init__(self, demon, item, father):
         self.demon = demon
         self.item = item
         self.father = father
         self.paths = ["Path 1", "Path 2", "Path 3"]
 
-        # This is the actual game where everything will run
 
     def play(self):
 
@@ -101,12 +77,12 @@ class Game_engine(object):
                     else:
                         print("That is not an option.\n")
                 elif use_an_item == "h":
-                    print("Flashlight -> You need 'Batteries' to use the flashlight and it reveals the demon path\n"
+                    print("\nFlashlight -> You need 'Batteries' to use the flashlight and it reveals the demon path\n"
                           "Fire lamp -> You need 'Matches' to light the fire lamp and it reveals the item path\n"
                           "Gun -> You need a 'Magazine' & 'Pistol' but need 'Bullets' to actualy use the gun, you have the"
                           "ability to kill the demon and win the game.\n")
                 elif use_an_item == "n":
-                    print(f"These are the items you have in your backpack {self.item.users_backpack}")
+                    print(f"These are the items you have in your backpack {self.item.users_backpack}\n")
                     break
 
             # Display the available paths
@@ -270,19 +246,42 @@ class Item(object):
         if prize_item in [magazine, pistol]:
             self.items_list.remove(prize_item)
 
+def buffer_print(phrase):
+    for i in phrase:
+        sys.stdout.flush()
+        print(i, end="")
+        time.sleep(.05)
+
+
 
 
 # instanciating all the classes to objects
 
 def main():
     # instanciating all the classes to objects
+
+    phrase_one = ("NARRATOR: The father and his daughter are on vacation in a log cabin in the forrest.\n"
+              "DADDY: Would you like to go on a late night walk and clear our mind?\n"
+              "SHEENA: yes DADDY, the weather is really nice too!\n"
+              "DADDY: Make sure you don't leave my side ok, and do not let go of my hand.\n"
+              "SHEENA: Yes DADDY, I will make sure to never leave your sight! Now can we go dad!\n"
+              "NARRATOR: They set off for a walk not knowing that this might be their last.\n"
+              "NARRATOR: On the walk they go. While on the walk the father looks behind to see if her daughter is there, \n"
+              "but what he sees terrifies him.\n"
+              "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
+
+    skip = input("Would you like to skip the cutscene? (y/n) \n=> ")
+    if skip == "y":
+        pass
+    elif skip == "n":
+        buffer_print(phrase_one)
+    
     Anunnaki = Evil_demon()
     Ali = Father()
 
-    This_the_backpack = [battery]
-    This_the_backpack.sort()
+    the_backpack = [battery]
     gun_items = [bullets, magazine, pistol]
-    stuff = Item(gun_items, This_the_backpack)
+    stuff = Item(gun_items, the_backpack)
 
     # calling the actual game with the given parameters
     start = Game_engine(Anunnaki, stuff, Ali)
