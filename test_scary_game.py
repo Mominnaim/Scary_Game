@@ -1,4 +1,3 @@
-import random
 
 from .scary_game import Father, Item
 
