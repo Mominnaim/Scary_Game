@@ -15,10 +15,10 @@ pistol = "Pistol"
 class Game_engine(object):
 
     # This is the constructor method, this is what will be passed to the play() for the game to run
-    def __init__(self, demon, item, father):
-        self.demon = demon
+    def __init__(self, item):
+        self.demon = Evil_demon()
         self.item = item
-        self.father = father
+        self.father = Father()
         self.paths = ["Path 1", "Path 2", "Path 3"]
 
 
@@ -30,7 +30,7 @@ class Game_engine(object):
         while True:
 
             # This will be used later if the user has a gun or not.
-            guns_or_noguns = 0
+            guns = 0
 
             # The path the demon will be on - randomizes every round
             demon_path = random.choice(self.paths)
@@ -49,7 +49,7 @@ class Game_engine(object):
 
                 try:
                     use_an_item = input(
-                        str("\nWould you like to use an Item (y/n)\nOr type (h) for item usage info\n => "))
+                        str("\nWould you like to use an Item (y/n) or type (h) for item usage info\n => "))
                     if use_an_item.lower() != 'y' and use_an_item.lower() != 'n' and use_an_item.lower() != "h":
                         raise ValueError("PLEASE ENTER y, n ,h!")
                 except ValueError as d:
@@ -70,7 +70,7 @@ class Game_engine(object):
                     elif item_usage == "3":
                         if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
                             self.father.use_pistol(self.item.users_backpack)
-                            guns_or_noguns = 1
+                            guns = 1
                             break
                         else:
                             print("You do not have all the gun parts")
@@ -93,7 +93,7 @@ class Game_engine(object):
             loop_count += 1
 
             # This if will run if the user did not use the gun to kill the demon
-            if guns_or_noguns == 0:
+            if guns == 0:
                 print("Be careful and choose the right path\n")
                 while True:
                     try:
@@ -126,7 +126,7 @@ class Game_engine(object):
                     print(f"You have survived!\nand also collected a {safe_items}")
 
             # This if will run if the user does have a gun to kill the demon.
-            if guns_or_noguns == 1:
+            if guns == 1:
                 print("You have a loaded Deagle, aim wisely!\n")
                 while True:
                     try:
@@ -275,16 +275,13 @@ def main():
         pass
     elif skip == "n":
         buffer_print(phrase_one)
-    
-    Anunnaki = Evil_demon()
-    Ali = Father()
 
     the_backpack = [battery]
     gun_items = [bullets, magazine, pistol]
     stuff = Item(gun_items, the_backpack)
 
     # calling the actual game with the given parameters
-    start = Game_engine(Anunnaki, stuff, Ali)
+    start = Game_engine(stuff)
     start.play()
 
 
