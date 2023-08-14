@@ -1,4 +1,4 @@
-import random
+
 
 from .scary_game import Father, Item
 
@@ -12,6 +12,8 @@ bullets = "Bullets"
 magazine = "Magazine"
 pistol = "Pistol"
 gunpowder = "Gunpowder"
+
+test_list = [magazine]
 
 
 def test_father_one():
@@ -49,3 +51,11 @@ def test_item_one():
     pieces = Item(item_list, empty_bagpack)
     pieces.collect_item()
     assert len(empty_bagpack) == 1
+
+def test_item_two():
+    empty_bagpack = []
+    pieces = Item(test_list, empty_bagpack)
+    pieces.collect_item()
+    assert magazine not in test_list
+
+
