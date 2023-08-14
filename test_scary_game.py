@@ -1,5 +1,3 @@
-
-
 from .scary_game import Father, Item
 
 item_list = ["Battery", "Matches", "Wooden stick", "Bullets", "Magazine", "Pistol", "Gunpowder"]
