@@ -17,27 +17,19 @@ test_list = [magazine]
 def test_father_one():
     Dad = Father()
     users_bagpack_2 = ["Battery"]
+    users_bagpack_3 = ["Matches"]
+    users_bagpack_4 = [deagle, bullets]
     demon = 1
-    Dad.use_item(users_bagpack_2, demon)
+    item = 2
+    Dad.use_item(users_bagpack_2, demon, item, "1")
+    Dad.use_item(users_bagpack_3, demon, item, "2")
+    Dad.use_item(users_bagpack_4, demon, item, "3")
     assert len(users_bagpack_2) == 0
+    assert len(users_bagpack_3) == 0
+    assert len(users_bagpack_4) == 1
 
 
 def test_father_two():
-    Dad = Father()
-    users_bagpack_3 = [matches]
-    item = 3
-    Dad.use_fire_lamp(users_bagpack_3, item)
-    assert len(users_bagpack_3) == 0
-
-
-def test_father_three():
-    Dad = Father()
-    gun_bagpack = [bullets, deagle]
-    Dad.use_pistol(gun_bagpack)
-    assert len(gun_bagpack) == 1
-
-
-def test_father_four():
     dad = Father()
     backpack = [magazine, pistol]
     dad.create_gun(backpack)

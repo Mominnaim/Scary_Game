@@ -2,7 +2,6 @@ import random
 import time
 import sys
 
-
 battery = "Battery"
 deagle = "Deagle"
 matches = "Matches"
@@ -20,7 +19,6 @@ class Game_engine(object):
         self.item = item
         self.father = Father()
         self.paths = ["Path 1", "Path 2", "Path 3"]
-
 
     def play(self):
 
@@ -61,19 +59,14 @@ class Game_engine(object):
                     print("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Fire lamp\n3. ---> Gun")
                     item_usage = input(str("==> "))
                     print()
-                    if item_usage == "1":
-                        self.father.use_item(self.item.users_backpack, demon_path)
-                        break
-                    elif item_usage == "2":
-                        self.father.use_fire_lamp(self.item.users_backpack, item_paths)
+                    if item_usage == "1" or item_usage == "2":
+                        self.father.use_item(self.item.users_backpack, demon_path, item_paths, item_usage)
                         break
                     elif item_usage == "3":
-                        if "Deagle" in self.item.users_backpack and "Bullets" in self.item.users_backpack:
-                            self.father.use_pistol(self.item.users_backpack)
+                        self.father.use_item(self.item.users_backpack, demon_path, item_paths, item_usage)
+                        if deagle in self.item.users_backpack and bullets in self.item.users_backpack:
                             guns = 1
                             break
-                        else:
-                            print("You do not have all the gun parts")
                     else:
                         print("That is not an option.\n")
                 elif use_an_item == "h":
@@ -121,9 +114,9 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == safe_path:
-                    safe_items = random.choice([matches, battery])
-                    self.item.users_backpack.append(safe_items)
-                    print(f"You have survived!\nand also collected a {safe_items}")
+                    safe_item = random.choice([matches, battery])
+                    self.item.users_backpack.append(safe_item)
+                    print(f"You have survived!\nand also collected a {safe_item}")
 
             # This if will run if the user does have a gun to kill the demon.
             if guns == 1:
@@ -153,9 +146,9 @@ class Game_engine(object):
 
                 # If the user picks this path then nothing happens but just run the loop again.
                 elif chosen_path == safe_path:
-                    safe_items = random.choice([matches, battery])
-                    self.item.users_backpack.append(safe_items)
-                    print(f"You have survived!\nand also collected a {safe_items}")
+                    safe_item = random.choice([matches, battery])
+                    self.item.users_backpack.append(safe_item)
+                    print(f"You have survived!\nand also collected a {safe_item}")
                     self.demon.missed_demon()
 
             self.father.create_gun(self.item.users_backpack)
@@ -169,28 +162,25 @@ class Father(object):
     """
 
     # This is where the item is actually used and then removed after the usage.
-    def use_item(self, backpack, demon):
-        if battery in backpack:
-            print(f"The demon is on {demon}. ")
-            backpack.remove("Battery")
-        else:
-            print("You do not have any batteries left to use.\n")
-
-    # This is where you can use the Fire lamp
-    def use_fire_lamp(self, backpack, item_path):
-        if matches in backpack:
-            print(f"The item is on {item_path}. \n")
-            backpack.remove(matches)
-        else:
-            print("You do not have a fire lamp\n")
-
-    # This is where you can use the pistol.
-    def use_pistol(self, backpack):
-        if deagle in backpack and bullets in backpack:
-            print("You need to pick the path with the demon and you will kill him and get your daughter back\n")
-            backpack.remove("Bullets")
-        else:
-            print("You do not have all the parts")
+    def use_item(self, backpack, demon, item, pick):
+        if pick == "1":
+            if battery in backpack:
+                print(f"The demon is on {demon}. ")
+                backpack.remove("Battery")
+            else:
+                print("You do not have any batteries left to use.\n")
+        elif pick == "2":
+            if matches in backpack:
+                print(f"The item is on {item}. \n")
+                backpack.remove(matches)
+            else:
+                print("You do not have a fire lamp\n")
+        elif pick == "3":
+            if deagle in backpack and bullets in backpack:
+                print("You need to pick the path with the demon and you will kill him and get your daughter back\n")
+                backpack.remove("Bullets")
+            else:
+                print("You do not have all the parts")
 
     def create_gun(self, backpack):
         if pistol in backpack and magazine in backpack:
@@ -246,13 +236,12 @@ class Item(object):
         if prize_item in [magazine, pistol]:
             self.items_list.remove(prize_item)
 
+
 def buffer_print(phrase):
     for i in phrase:
         sys.stdout.flush()
         print(i, end="")
         time.sleep(.05)
-
-
 
 
 # instanciating all the classes to objects
@@ -261,14 +250,14 @@ def main():
     # instanciating all the classes to objects
 
     phrase_one = ("NARRATOR: The father and his daughter are on vacation in a log cabin in the forrest.\n"
-              "DADDY: Would you like to go on a late night walk and clear our mind?\n"
-              "SHEENA: yes DADDY, the weather is really nice too!\n"
-              "DADDY: Make sure you don't leave my side ok, and do not let go of my hand.\n"
-              "SHEENA: Yes DADDY, I will make sure to never leave your sight! Now can we go dad!\n"
-              "NARRATOR: They set off for a walk not knowing that this might be their last.\n"
-              "NARRATOR: On the walk they go. While on the walk the father looks behind to see if her daughter is there, \n"
-              "but what he sees terrifies him.\n"
-              "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
+                  "DADDY: Would you like to go on a late night walk and clear our mind?\n"
+                  "SHEENA: yes DADDY, the weather is really nice too!\n"
+                  "DADDY: Make sure you don't leave my side ok, and do not let go of my hand.\n"
+                  "SHEENA: Yes DADDY, I will make sure to never leave your sight! Now can we go dad!\n"
+                  "NARRATOR: They set off for a walk not knowing that this might be their last.\n"
+                  "NARRATOR: On the walk they go. While on the walk the father looks behind to see if her daughter is there, \n"
+                  "but what he sees terrifies him.\n"
+                  "Monster: I have your daughter, and the only way to get her back, is to play my little game!\n")
 
     skip = input("Would you like to skip the cutscene? (y/n) \n=> ")
     if skip == "y":
