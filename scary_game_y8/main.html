@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container {
+            height: 1000px;
+            position: relative;
+            border: 3px solid green;
+            background-color: black;
+
+        }
+        .vertical-center {
+            margin: 0; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        button {
+            display: block;
+            font-size: 18px;
+            border-radius: 4px;
+            background-color: whitesmoke;
+            color: #515A5A;
+            padding: 6px 12px;
+            cursor: pointer;
+            border: 4px solid whitesmoke;
+            width: 240px;
+            margin: 12px;
+            opacity: 50%;
+            
+        }
+
+    </style>
+
+    <div class = "container">
+        <div class = "vertical-center">
+            <button>Play</button>
+            <button id = "tutorial">Tutorial</button>
+            <script>
+                var myButton = document.getElementById("tutorial");
+
+                myButton.addEventListener('click', function() {
+                    window.location.href = 'tutorial.html'
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>
