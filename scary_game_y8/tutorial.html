@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container {
+            height: 1000px;
+            position: relative;
+            border: 3px solid black;
+            background-color: black;
+
+        }
+        .vertical-center {
+            margin: 0; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        #goback {
+            background-color: grey;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            margin-left: 50%;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: white;
+        }
+        h3 {
+            margin-top: 10%;
+            color: white;
+        }
+        h4 {
+            margin-bottom: 0px;
+            color: white;
+        }
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 2px;
+            color: white;
+        }
+        .deagle {
+            margin-bottom: 50px;
+        }
+
+        p {
+            color: white;
+        }
+
+    </style>
+    <div class = 'container'>
+        <div class = 'vertical-center'>
+            <h1>Backround story </h1>
+            <p>The father takes her daughter out for a late night walk, during the walk there is heavy wind and a faint whisper. 
+            Later some sort of creature snatches the girl and runs. The father sets off in the woods to find the monster, and get her daughter </p>
+
+            <h3>THE BASICS OF THE GAME</h3>
+            <P>The player will have to repeatedly pick one of the three paths given, and each of those three paths will have one of the following things mentioned below:</P>
+                <ul>
+                    <li><i>Monster</i> -> If you click this path you lose the game.</li>
+                    <li><i>Item</i> -> If you click this path, you obtain an item.</li>
+                    <li><i>Safe Path</i> -> If you click this path you either receive a battery or flashlight.</li>
+                </ul>
+            <h3>ITEM USAGE INFO</h3>
+                <P>There are items that you can collect in the game, ans use it to get your through the game.</P>
+
+                <h4>Flashlight</h4>
+                <ul>
+                    <li>Collect <i>batteries</i></li>
+                    <ul>
+                        <li>You already have a flashlight so there will be no need to make one, just collect batteries.</li>
+                        <li>Reveals where the monster is.</li>
+                    </ul>
+                </ul>
+
+                <h4>Fire Lamp</h4>
+                <ul>
+                    <li>You need <i>matches</i></li>
+                    <ul>
+                        <li>You have a fire lamp, so no need to collect one</li>
+                        <li>Reveals the path that has an item.</li>
+                    </ul>
+                </ul>
+
+                <h4>Deagle</h4>
+                <ul class = 'deagle'>
+                    <li>You need <i>pistol</i> and <i>magazine</i></li>
+                    <ul>
+                        <li>You can now hunt down the monster, but be wise since you have to guess what path the monster is on.</li>
+                        <ul>
+                            <li>If you miss, you have wasted a bullet, and need to collect another one to try again.</li>
+                        </ul>
+                    </ul>
+                </ul>
+
+                <button id = 'goback'>Go back</button>
+
+                <script>
+
+                    var goBackButton = document.getElementById('goback')
+
+                    goBackButton.addEventListener('click', function() {
+                        window.location.href = ('main.html')
+                    })
+                </script>
+        </div>
+    </div>
+</body>
+</html>
