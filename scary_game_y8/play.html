@@ -16,14 +16,16 @@
         .game-container {
             height: 700px;
             padding: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
 
         button {
             padding: 10px;
             height: 100%;
-            width: 33%;
             background-color: white;
+            width: 100%;
         }
         p {
             font-size: 20px;
@@ -31,14 +33,18 @@
             margin-bottom: 5px;
         }
 
+        .game_button {
+            width: 33.33%; /* Calculate width with margins */
+        }
+
         
     </style>
     <div class = 'container'>
         <p>Path walked:  <span id = 'survived'>0</span></p>
         <div class = 'game-container'>
-        <button id = 'first_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
-        <button id = 'second_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
-        <button id = 'third_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
+            <div class = "game_button"><button id = 'first_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button></div>
+            <div class = "game_button"><button id = 'second_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button></div>
+            <div class = "game_button"><button id = 'third_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button></div>
         </div>
     </div>
     <script>
