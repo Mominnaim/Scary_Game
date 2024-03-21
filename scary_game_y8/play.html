@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container {
+            height: 750px;
+            position: relative;
+            background-color: black;
+        }
+
+        .game-container {
+            height: 700px;
+            padding: 10px;
+        }
+
+
+        button {
+            padding: 10px;
+            height: 100%;
+            width: 33%;
+            background-color: white;
+        }
+        p {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        
+    </style>
+    <div class = 'container'>
+        <p>Path walked:  <span id = 'survived'>0</span></p>
+        <div class = 'game-container'>
+        <button id = 'first_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
+        <button id = 'second_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
+        <button id = 'third_path', onclick="updateSurvived()" style="background: url(CT.jpg);"></button>
+        </div>
+    </div>
+    <script>
+        var survivalCounter = 0; // Variable to keep track of survival counter
+
+        function updateSurvived() {
+            survivalCounter++; // Increment the survival count
+            document.getElementById('survived').textContent = survivalCounter; // update the span content
+        }
+    </script>
+
+
+    
+</body>
+</html>

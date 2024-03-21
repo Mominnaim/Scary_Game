@@ -42,14 +42,21 @@
 
     <div class = "container">
         <div class = "vertical-center">
-            <button>Play</button>
+            <button id = 'Play'>Play</button>
             <button id = "tutorial">Tutorial</button>
             <script>
                 var myButton = document.getElementById("tutorial");
+                var playButton = document.getElementById("Play")
 
                 myButton.addEventListener('click', function() {
                     window.location.href = 'tutorial.html'
                 });
+
+                playButton.addEventListener('click', function() {
+                    window.location.href = 'play.html'
+                });
+                
+
             </script>
         </div>
     </div>
