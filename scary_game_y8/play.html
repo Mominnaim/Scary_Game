@@ -9,13 +9,15 @@
 <body>
     <style>
         .container {
-            height: 750px;
+            height: 100vh;
+            width: 100vw;
             position: relative;
             background-color: black;
         }
 
         .game-container {
-            height: 700px;
+            height: 85vh;
+            width: 85vw;
             padding: 10px;
             display: flex;
             justify-content: space-between;
@@ -41,11 +43,11 @@
         
     </style>
     <div class = 'container'>
-        <p>Path walked:  <span id = 'survived'>0</span></p>
+        <p>Path walked:  <span id = 'survived'>0</span> <span id = type-of-path> :Enter </span> </p>
         <div class = 'game-container'>
-            <div class="game_button"><button id="first_path" onclick="updateSurvived();" style="background: url(CT.jpg);"></button></div>
-            <div class="game_button"><button id="second_path" onclick="updateSurvived();" style="background: url(CT.jpg);"></button></div>
-            <div class="game_button"><button id="third_path" onclick="updateSurvived();" style="background: url(CT.jpg);"></button></div>  
+            <div class="game_button"><button id="first_path" onclick="updateSurvived(); buttonClick('first_path');" style="background: url(CT.jpg);"></button></div>
+            <div class="game_button"><button id="second_path" onclick="updateSurvived(); buttonClick('second_path');" style="background: url(CT.jpg);"></button></div>
+            <div class="game_button"><button id="third_path" onclick="updateSurvived(); buttonClick('third_path');" style="background: url(CT.jpg);"></button></div>  
         </div>
     </div>
     
