@@ -13,6 +13,8 @@
             width: 100vw;
             position: relative;
             background-color: black;
+            display: flex;
+            padding: 10px;
         }
 
         .game-container {
@@ -20,7 +22,9 @@
             width: 85vw;
             padding: 10px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            padding-left: 10px;
+            
         }
 
 
@@ -40,15 +44,88 @@
             width: 33.33%; /* Calculate width with margins */
         }
 
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+            height: 10%;
+            width: 10%;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        .LoopCount {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            background-color: black;
+            display: flex;
+            padding: 10px;
+        }
+
+
+        
+        
+
         
     </style>
+    <div class = 'LoopCount'><p>Path walked:  <span id = 'survived'>0</span> <span id = type-of-path> :Enter </span> </p></div>
     <div class = 'container'>
-        <p>Path walked:  <span id = 'survived'>0</span> <span id = type-of-path> :Enter </span> </p>
         <div class = 'game-container'>
             <div class="game_button"><button id="first_path" onclick="updateSurvived(); buttonClick('first_path');" style="background: url(CT.jpg);"></button></div>
             <div class="game_button"><button id="second_path" onclick="updateSurvived(); buttonClick('second_path');" style="background: url(CT.jpg);"></button></div>
             <div class="game_button"><button id="third_path" onclick="updateSurvived(); buttonClick('third_path');" style="background: url(CT.jpg);"></button></div>  
         </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="#home">Home</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+            </div>
+          </div>
+        
     </div>
     
 
