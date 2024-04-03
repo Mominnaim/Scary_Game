@@ -113,9 +113,9 @@
     <div class = 'LoopCount'><p>Path walked:  <span id = 'survived'>0</span> <span id = type-of-path> :Enter </span> </p></div>
     <div class = 'container'>
         <div class = 'game-container'>
-            <div class="game_button"><button id="first_path" onclick="updateSurvived(); buttonClick('first_path');" style="background: url(CT.jpg);"></button></div>
-            <div class="game_button"><button id="second_path" onclick="updateSurvived(); buttonClick('second_path');" style="background: url(CT.jpg);"></button></div>
-            <div class="game_button"><button id="third_path" onclick="updateSurvived(); buttonClick('third_path');" style="background: url(CT.jpg);"></button></div>  
+            <div class="game_button"><button id="first_path" onclick="updateSurvived(); whatPath('first_path',demonPath, itemPaths,safePath,gunNumber);" style="background: url(CT.jpg);"></button></div>
+            <div class="game_button"><button id="second_path" onclick="updateSurvived(); whatPath('second_path',demonPath, itemPaths,safePath,gunNumber);" style="background: url(CT.jpg);"></button></div>
+            <div class="game_button"><button id="third_path" onclick="updateSurvived(); whatPath('third_path',demonPath, itemPaths,safePath,gunNumber);" style="background: url(CT.jpg);"></button></div>  
         </div>
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">Backpack</button>

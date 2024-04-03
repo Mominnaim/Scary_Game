@@ -157,9 +157,10 @@ class Game_engine {
 
         // This is the loop of the game, and keeps track of the rounds.
         let loopCount = 0;
+        const yes = true
 
         // Create the loop of the game
-        while (true) {
+        while (loopCount < 100) {
 
             // guns = 0 means that we have not created the deagle for us to kill the demon.
             let guns = 0;
@@ -196,53 +197,20 @@ class Game_engine {
 
                 // This is for the user to know what they have in their backpack
                 console.log(`You have ${this.item.users_backpack}`);
-
-                // The user has to enter in an input 
-                const useAnItem = readlineSync.question("Would you like to use an Item (y/n) or type (h) for item usage info\n => ").toLowerCase();
-
-                // If the user selects Y then they come here.
-                if (useAnItem === 'y') {
-                    console.log("\nWhich Item would you like to use?\n1. ---> Flashlight\n2. ---> Fire lamp\n3. ---> Gun");
-                    const itemUsage = readlineSync.question("==> ");
-
-                    // If the user enters one or two they will come here and then get sent to the father class, specifically the useItem method
-                    if (itemUsage === "1" || itemUsage === "2") {
-                        this.father.useItem(this.item.users_backpack, demonPath, itemPaths, itemUsage);
-                        break;
-                    
-                    // If the user enters 3 then it will go here
-                    } else if (itemUsage === "3") {
-                        if (this.item.users_backpack.includes(deagle) && this.item.users_backpack.includes(bullets)) {
-                            this.father.useItem(this.item.users_backpack, demonPath, itemPaths, itemUsage);
-                            // The user picked the use gun option, so now the rounds will change where if the demon path is picked then the demon dies and the use wins the game 
-                            guns = 1;
-                            break;
-                        } else {
-                            break;
-                        }
-
-                    // In case the user picks something that is not a option
-                    } else {
-                        console.log("That is not an option.\n");
-                    }
-
-                // If the user needs help with what is going on.
-                } else if (useAnItem === "h") {
-                    console.log("\nFlashlight -> You need 'Batteries' to use the flashlight and it reveals the demon path\n" +
-                                "Fire lamp -> You need 'Matches' to light the fire lamp and it reveals the item path\n" +
-                                "Gun -> You need a 'Magazine' & 'Pistol' but need 'Bullets' to actually use the gun, you have the " +
-                                "ability to kill the demon and win the game.\n");
-
-                // If the user does not want to pick anything
-                } else if (useAnItem === "n") {
-                    console.log(`These are the items you have in your backpack ${this.item.users_backpack}\n`);
-                    break;
-
-                // Again if the user types something they are not supposed to.
-                } else {
-                    console.log("PLEASE ENTER y, n ,h!");
-                }
+                break
             }
+            const buttons = document.getElementsByClassName('game_button');
+
+            // Iterate over the collection of elements
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i].querySelector('button'); // Get the button element inside each game_button div
+                // Add an event listener to each button
+                button.addEventListener('click', () => {
+                    // Call your function with the desired arguments
+                    whatPath(button.id, demonPath, itemPaths, safePath,guns);
+                });
+            }
+
 
 
         
@@ -256,73 +224,9 @@ class Game_engine {
             // This will add 1 to loopCount for every loop
             loopCount++;
 
-            // This is if the user did not pick the number 3 the gun
-            if (guns === 0) {
-                console.log("Be careful and choose the right path\n");
-                while (true) {
-
-                    // Counts the loop 
-                    const userChoice = readlineSync.questionInt(`Round #${loopCount} Choose your path => `);
-
-                    if (userChoice >= 1 && userChoice <= 3) {
-                        const chosenPath = this.paths[userChoice - 1];
-
-                        // if the demon path is chosen then the user dies
-                        if (chosenPath === demonPath) {
-                            this.demon.getDeath();
-
-                        // If the itemPath is chosen then user gets an item
-                        } else if (chosenPath === itemPaths) {
-                            this.item.getItem();
-
-                        // If the safePath is chosen then math.random will pick a number from 0 - 1 and if it is greater than .5 then matches will be assigned otherwise battery.
-                        } else if (chosenPath === safePath) {
-                            const safeItem = Math.random() < 0.5 ? matches : battery;
-                            this.item.users_backpack.push(safeItem);
-                            console.log(`You have survived!\nand also collected a ${safeItem}`);
-                        }
-                        break;
-                    } else {
-                        console.log(`There is no ${userChoice}, please pick a valid path!`);
-                    }
-                }
-            
-
-
-            // This is if the user does pick number 3, and so they have a chance to kill the demon.
-            } else if (guns === 1) {
-                console.log("You have a loaded Deagle, aim wisely!\n");
-                while (true) {
-                    const userChoice = readlineSync.questionInt(`Tunnel #${loopCount} Walk your path => `);
-
-                    
-                    if (userChoice >= 1 && userChoice <= 3) {
-                        const chosenPath = this.paths[userChoice - 1];
-
-                        // If the demon path gets picked, then the user wins
-                        if (chosenPath === demonPath) {
-                            this.demon.getKillDemon();
-
-                        // If the itempath gets picked, it will print you have missed, but you will get an item
-                        } else if (chosenPath === itemPaths) {
-                            this.item.getItem();
-                            this.demon.getMissedDemon();
-
-                        // Same thing here as the one up above
-                        } else if (chosenPath === safePath) {
-                            const safeItem = Math.random() < 0.5 ? matches : battery;
-                            this.item.users_backpack.push(safeItem);
-                            console.log(`You have survived!\nand also collected a ${safeItem} but,`);
-                            this.demon.getMissedDemon();
-                        }
-                        break;
-                    } else {
-                        console.log('oof')
-                    }
-                }
-            }
         }
     }
+    
 }
 
 // The initial backpack and items
@@ -353,5 +257,53 @@ function myFunction() {
           openDropdown.classList.remove('show');
         }
       }
+    }
+  }
+
+  function whatPath(userChoice, demonPath, itemPaths, safePath, gunNumber) {
+    if (guns === 0) {
+        if (userChoice >= 1 && userChoice <= 3) {
+            const chosenPath = this.paths[userChoice - 1];
+    
+            // if the demon path is chosen then the user dies
+            if (chosenPath === demonPath) {
+                this.demon.getDeath();
+    
+            // If the itemPath is chosen then user gets an item
+            } else if (chosenPath === itemPaths) {
+                this.item.getItem();
+    
+            // If the safePath is chosen then math.random will pick a number from 0 - 1 and if it is greater than .5 then matches will be assigned otherwise battery.
+            } else if (chosenPath === safePath) {
+                const safeItem = Math.random() < 0.5 ? matches : battery;
+                this.item.users_backpack.push(safeItem);
+                console.log(`You have survived!\nand also collected a ${safeItem}`);
+            }
+        }
+    } else if (guns === 1){
+        console.log("You have a loaded Deagle, aim wisely!\n");
+    
+        //const userChoice = readlineSync.questionInt(`Tunnel #${loopCount} Walk your path => `);
+        if (userChoice >= 1 && userChoice <= 3) {
+            const chosenPath = this.paths[userChoice - 1];
+
+            // If the demon path gets picked, then the user wins
+            if (chosenPath === demonPath) {
+                this.demon.getKillDemon();
+
+            // If the itempath gets picked, it will print you have missed, but you will get an item
+            } else if (chosenPath === itemPaths) {
+                this.item.getItem();
+                this.demon.getMissedDemon();
+
+            // Same thing here as the one up above
+            } else if (chosenPath === safePath) {
+                const safeItem = Math.random() < 0.5 ? matches : battery;
+                this.item.users_backpack.push(safeItem);
+                console.log(`You have survived!\nand also collected a ${safeItem} but,`);
+                this.demon.getMissedDemon();
+            }
+
+        }
     }
   }
