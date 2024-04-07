@@ -153,14 +153,14 @@ class Game_engine {
         this.paths = paths;
     }
 
-    play() {
+    async play() {
 
         // This is the loop of the game, and keeps track of the rounds.
         let loopCount = 0;
         const yes = true
 
         // Create the loop of the game
-        while (loopCount < 100) {
+        while (loopCount < 1) {
 
             // guns = 0 means that we have not created the deagle for us to kill the demon.
             let guns = 0;
@@ -169,12 +169,15 @@ class Game_engine {
 
             //Math.random picks a number from 0 to 1, then * by 3 (3 paths), then rounds down to the nearest whole number.
             const demonPath = this.paths[Math.floor(Math.random() * this.paths.length)];
+            console.log(`${demonPath}`)
 
             //This code filters out the path that has the demon in it, and multiple it by 2 and round down
             const itemPaths = this.paths.filter(path => path !== demonPath)[Math.floor(Math.random() * 2)];
+            console.log(`${itemPaths}`)
 
             // This filters out all the paths that has been taken and assigns the last remaining path to safepath
             const safePath = this.paths.filter(path => path !== demonPath && path !== itemPaths)[0];
+            console.log(`${safePath}`)
 
             // Another loop incase the user decides to enter something they are not supposed to.
             while (true) {
@@ -199,21 +202,7 @@ class Game_engine {
                 console.log(`You have ${this.item.users_backpack}`);
                 break
             }
-            const buttons = document.getElementsByClassName('game_button');
 
-            // Iterate over the collection of elements
-            for (let i = 0; i < buttons.length; i++) {
-                const button = buttons[i].querySelector('button'); // Get the button element inside each game_button div
-                // Add an event listener to each button
-                button.addEventListener('click', () => {
-                    // Call your function with the desired arguments
-                    whatPath(button.id, demonPath, itemPaths, safePath,guns);
-                });
-            }
-
-
-
-        
     
             // This is the starting of the game, where the user will acutally pick the path
             console.log("Walk your Path:");
@@ -223,11 +212,48 @@ class Game_engine {
 
             // This will add 1 to loopCount for every loop
             loopCount++;
+            
+            const buttons = document.getElementsByClassName('game_button');
+            const buttonArray = [];
 
+            // Iterate over the collection of elements
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i].querySelector('button');
+                buttonArray.push(button);
+            }
+
+            function handleClick(buttonId) {
+                return new Promise((resolve, reject) => {
+                    switch (buttonId) {
+                        case 'first_path':
+                            whatPath('first_path')
+                            break;
+                        case 'second_path':
+                            whatPath('second_path')
+                            break;
+                        case 'third_path':
+                            whatPath('third_path')
+                            break;
+                    }
+
+                    resolve();
+                });
+            }
+
+            buttonArray.forEach(button => {
+                button.addEventListener('click', async() => {
+                    const buttonId = button.id
+
+                    await handleClick(buttonId);
+                });
+            });
+                    
+                            
         }
+
     }
-    
 }
+    
 
 // The initial backpack and items
 const theBackpack = [battery, matches, bullets, magazine, pistol];
@@ -260,50 +286,13 @@ function myFunction() {
     }
   }
 
-  function whatPath(userChoice, demonPath, itemPaths, safePath, gunNumber) {
-    if (guns === 0) {
-        if (userChoice >= 1 && userChoice <= 3) {
-            const chosenPath = this.paths[userChoice - 1];
-    
-            // if the demon path is chosen then the user dies
-            if (chosenPath === demonPath) {
-                this.demon.getDeath();
-    
-            // If the itemPath is chosen then user gets an item
-            } else if (chosenPath === itemPaths) {
-                this.item.getItem();
-    
-            // If the safePath is chosen then math.random will pick a number from 0 - 1 and if it is greater than .5 then matches will be assigned otherwise battery.
-            } else if (chosenPath === safePath) {
-                const safeItem = Math.random() < 0.5 ? matches : battery;
-                this.item.users_backpack.push(safeItem);
-                console.log(`You have survived!\nand also collected a ${safeItem}`);
-            }
-        }
-    } else if (guns === 1){
-        console.log("You have a loaded Deagle, aim wisely!\n");
-    
-        //const userChoice = readlineSync.questionInt(`Tunnel #${loopCount} Walk your path => `);
-        if (userChoice >= 1 && userChoice <= 3) {
-            const chosenPath = this.paths[userChoice - 1];
 
-            // If the demon path gets picked, then the user wins
-            if (chosenPath === demonPath) {
-                this.demon.getKillDemon();
-
-            // If the itempath gets picked, it will print you have missed, but you will get an item
-            } else if (chosenPath === itemPaths) {
-                this.item.getItem();
-                this.demon.getMissedDemon();
-
-            // Same thing here as the one up above
-            } else if (chosenPath === safePath) {
-                const safeItem = Math.random() < 0.5 ? matches : battery;
-                this.item.users_backpack.push(safeItem);
-                console.log(`You have survived!\nand also collected a ${safeItem} but,`);
-                this.demon.getMissedDemon();
-            }
-
-        }
+function whatPath(userChoice, demonPath, itemPaths, safePath, gunNumber) {
+    if (userChoice === 'first_path') {
+        console.log(`This is the ${userChoice}`)
+    } else if (userChoice === 'second_path') {
+        console.log(`This is the ${userChoice}`)
+    } else if (userChoice === 'third_path') {
+        console.log(`This is the ${userChoice}`)
     }
-  }
+}
