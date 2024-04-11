@@ -121,16 +121,17 @@ class Father {
 // This is a function that brings in all the path from the button 
 function bringInPath() {
 
-    // This takes all the button from the .game-container and pushes it to buttonsID
-    var buttons = document.querySelectorAll('.game-container button');
-    var buttonIds = [];
+    const buttons = document.getElementsByClassName('game_button');
+            const buttonArray = [];
 
-    buttons.forEach(function(button) {
-        buttonIds.push(button.id);
-    });
-
-    return buttonIds
-
+            // Iterate over the collection of elements
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i].querySelector('button');
+                buttonArray.push(button);
+                
+            }
+        
+    return buttonArray
 }
 
 
@@ -262,6 +263,7 @@ const allItems = [bullets, magazine, pistol, matches, battery];
 // Creating an instance of the Item class
 const stuff = new Item(allItems, theBackpack);
 const theWay = bringInPath()
+console.log(theWay)
 
 const start = new Game_engine(stuff,theWay)
 document.addEventListener('DOMContentLoaded', () => {

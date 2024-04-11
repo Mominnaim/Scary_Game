@@ -5,6 +5,8 @@ This is what is not working, The buttons only log 'yes' from first button to thi
 also repeat the loop. 
 
 For some reason the path is not being sent to the game_engine, and is rather given no input.
-
-
 ---->
+
+--->
+The buttons are working but its not making the while loop wait it just keeps on running. On top of that, the paths are still not displaying
+--->
