@@ -122,16 +122,16 @@ class Father {
 function bringInPath() {
 
     const buttons = document.getElementsByClassName('game_button');
-            const buttonArray = [];
+            const pathArray = [];
 
             // Iterate over the collection of elements
             for (let i = 0; i < buttons.length; i++) {
-                const button = buttons[i].querySelector('button');
-                buttonArray.push(button);
+                const buttonId = buttons[i].querySelector('button').id;
+                pathArray.push(buttonId);
                 
             }
         
-    return buttonArray
+    return pathArray
 }
 
 
@@ -170,15 +170,15 @@ class Game_engine {
 
             //Math.random picks a number from 0 to 1, then * by 3 (3 paths), then rounds down to the nearest whole number.
             const demonPath = this.paths[Math.floor(Math.random() * this.paths.length)];
-            console.log(`${demonPath}`)
+            console.log(`${demonPath} \n`)
 
             //This code filters out the path that has the demon in it, and multiple it by 2 and round down
             const itemPaths = this.paths.filter(path => path !== demonPath)[Math.floor(Math.random() * 2)];
-            console.log(`${itemPaths}`)
+            console.log(`${itemPaths} \n`)
 
             // This filters out all the paths that has been taken and assigns the last remaining path to safepath
             const safePath = this.paths.filter(path => path !== demonPath && path !== itemPaths)[0];
-            console.log(`${safePath}`)
+            console.log(`${safePath} \n`)
 
             // Another loop incase the user decides to enter something they are not supposed to.
             while (true) {
@@ -206,10 +206,7 @@ class Game_engine {
 
     
             // This is the starting of the game, where the user will acutally pick the path
-            console.log("Walk your Path:");
-
-            // This is a for loop where it will display each path.
-            this.paths.forEach((path, index) => console.log(`${index + 1}. ${path}\n`));
+            console.log("Walk your Path: \n");
 
             // This will add 1 to loopCount for every loop
             loopCount++;
@@ -241,14 +238,16 @@ class Game_engine {
                 });
             }
 
-            buttonArray.forEach(button => {
-                button.addEventListener('click', async() => {
-                    const buttonId = button.id
-
+            // Add event listeners using a traditional for loop
+            for (let i = 0; i < buttonArray.length; i++) {
+                buttonArray[i].addEventListener('click', async () => {
+                    const buttonId = buttonArray[i].id;
                     await handleClick(buttonId);
+                    console.log(i)
+                    this.play(); // Make sure 'this' is appropriately defined in this context
                 });
-            });
-                    
+            }
+                                
                             
         }
 
@@ -263,9 +262,11 @@ const allItems = [bullets, magazine, pistol, matches, battery];
 // Creating an instance of the Item class
 const stuff = new Item(allItems, theBackpack);
 const theWay = bringInPath()
-console.log(theWay)
 
-const start = new Game_engine(stuff,theWay)
+
+Temp_array = ['first_path','second_path','third_path']
+
+const start = new Game_engine(stuff,Temp_array)
 document.addEventListener('DOMContentLoaded', () => {
     start.play();
 })

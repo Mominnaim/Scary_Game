@@ -10,3 +10,14 @@ For some reason the path is not being sent to the game_engine, and is rather giv
 --->
 The buttons are working but its not making the while loop wait it just keeps on running. On top of that, the paths are still not displaying
 --->
+
+
+I really need to take the time and understand how eventhandling works.
+I am not able to incorperate the right handling to do the right things, and when I do it gets stuck in a loop and idk how to fix it.
+
+
+---> How does event Handling work <---
+
+1. Can you have mutliple event handling working with each other, can you have nested eventhandling.
+
+2. How does event handling work when dealing with classes.
